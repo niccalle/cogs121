@@ -14,12 +14,13 @@
 
 ## Ashkon's Storyboards
 ### Storyboard 5
-* ![](/storyboardpics/jo1.jpg)
+* ![](/storyboardpics/ashkon-1.jpg)
 ### Storyboard 6
-* ![](/storyboardpics/jo2.jpg)
+* ![](/storyboardpics/ashkon-2.jpg)
 
 ## Joseph's Storyboards
 ### Storyboard 7
 * ![](/storyboardpics/jo1.jpg)
 ### Storyboard 8
 * ![](/storyboardpics/jo2.jpg)
+
