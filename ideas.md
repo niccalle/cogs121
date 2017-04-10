@@ -7,6 +7,8 @@
 * Application to find players for games based of geographical location
 * Automatic day planner that is based off of weather
 ## joseph's ideas
+* Web application that provides a service for baby sitting pets or adopting and donating pets
+* Tinder for pets because pets have feelings too
 ## anish's ideas
 * crowd sourced GoogleMaps type application but for walking or biking
 * shows routes and shortcuts other people take by tracking their phone location
