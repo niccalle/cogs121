@@ -8,3 +8,8 @@
     * Automatic day planner that is based off of weather
 ## joseph's ideas
 ## anish's ideas
+    * crowd sourced GoogleMaps type application but for walking or biking
+       * shows routes and shortcuts other people take by tracking their phone location
+       * Would be with permission and routes anonymous
+    * online stores could inform users how much of a product they have in stock at the retail store closest to the user
+    * enter in one or more locations you want to travel to and preferences (sight seeing, eating, etc.) and algorithm chooses best routes and order of cities and where to stay
