@@ -8,9 +8,9 @@
 
 ## Anish's Storyboards
 ### Storyboard 3
-* ![](/storyboardpics/jo1.jpg)
+* ![](/storyboardpics/anish-1.JPG)
 ### Storyboard 4
-* ![](/storyboardpics/jo2.jpg)
+* ![](/storyboardpics/anish-2.JPG)
 
 ## Ashkon's Storyboards
 ### Storyboard 5
