@@ -46,7 +46,7 @@ app.get('/bikeRoute', function(req,res){
         params = {
             location: locations[i],
             size: "600x300",
-            heading: "0",
+            heading: 0,
             fov: "120",
         }
         images[i] = gmAPI.streetView(params)

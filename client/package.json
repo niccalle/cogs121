@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
+    "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.4",
     "react-fetch": "0.0.9"
   },
