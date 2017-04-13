@@ -1,0 +1,31 @@
+{
+  "name": "route-preview",
+  "version": "1.0.0",
+  "description": "Cogs 121 Repository!!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"cd client && npm start\"",
+    "server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niccalle/cogs121.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niccalle/cogs121/issues"
+  },
+  "homepage": "https://github.com/niccalle/cogs121#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "path": "^0.12.7",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0"
+  }
+}
