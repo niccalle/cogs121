@@ -1,7 +1,8 @@
 # cogs121
 Cogs 121 Repository!!
 
-AIzaSyCuJpY-A-LadO95r90DWf0_HMALJTO2KYg
+streetview- AIzaSyCuJpY-A-LadO95r90DWf0_HMALJTO2KYg
+directions- AIzaSyD0dpZoUc_MBJ86CEq4me3KLKWZUmiJ6dY
 
 locations:
 "32.9302117,-117.2598747"
