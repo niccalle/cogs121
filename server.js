@@ -10,7 +10,9 @@ app.use(express.static(path.join(__dirname, '/static')));
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/bikeRoute', mapsRoute.bikeRoute)
+app.get('/bikeRoute', mapsRoute.bikeRoute);
+
+app.get('/getRoute', mapsRoute.getRoute);
 
 app.listen(port, function(){
     console.log("listening in on port " + port);
