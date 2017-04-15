@@ -21,6 +21,15 @@ class App extends Component {
         }
         this.getImages();
     }
+    handleChange( event ) {
+      this.setState( {[event.target.name]: e.target.value});  
+    }
+
+    handleSubmit( event ) {
+      console.log(this);
+      event.preventDefault();
+    }
+
     render() {
         return (
             <div className="App">
@@ -29,10 +38,25 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h2>Welcome to React</h2>
                 </div>
+
                 <div className="container">
                     <ul>
                         {this.state.imgs[this.state.index]}
                     </ul>
+
+                <div className="start-end">
+                  <form onSubmit={this.handleSubmit}>
+                     Start: <input value={this.state.start} name="start"
+                        onChange={this.handleChange} />
+                     <br />
+                     End: <input  value={this.state.end} name="end"
+                        onChange={this.handleChange} />
+                     <br />
+                     <input type="submit" value="Submit" />
+                  </form>
+                </div>
+
+
                 </div>
 
             </div>
@@ -40,7 +64,7 @@ class App extends Component {
     }
     renderImg(i){
         var style = {
-            "display": i == this.state.index ? "auto" : "none"
+            "display": i === this.state.index ? "auto" : "none"
         }
         return <RouteImg key={i} src={this.state.images[i]} style={style} handleClick={() => this.handleClick()}  />
     }
