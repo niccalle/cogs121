@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"cd client && npm start\"",
+    "setup": "npm install && cd client && npm install",
     "server": "node server.js"
   },
   "repository": {
