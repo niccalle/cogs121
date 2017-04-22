@@ -8,7 +8,6 @@ import { FormControl } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 
-
 class RouteImg extends Component{
     render() {
         return <img src={this.props.src} style={this.props.style} onClick={this.props.handleClick} alt="test"/>
@@ -23,7 +22,8 @@ class RouteSearch extends Component{
             start: '',
             end: '',
             index: 0,
-            playing: false
+            playing: false,
+            speed: 100
         }
         //Binding so we can call 'this' inside the methods
         this.handleChange = this.handleChange.bind(this);
@@ -38,6 +38,10 @@ class RouteSearch extends Component{
         for(var i in this.state.images){
             imgs.push(this.renderImage(i));
         }
+        var style = {
+            "display": this.state.playing ? "none" : "inline"
+        }
+        document.body.addEventListener('keydown', this.handleKeyPress);
         return (
             <div className="container">
                 <div className="start-end">
@@ -60,16 +64,15 @@ class RouteSearch extends Component{
                     </Form>
                 </div>
                 <div className="route-gif">
+                    <a href="#" className="playWrapper">
+                        <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
+                    </a>
                     <ul>
                         {imgs}
                     </ul>
                 </div>
-                <Row className="play-route">
-                    <Col md={2}>
-                        <Button bsStyle="danger" onClick={this.playRoute} block>
-                            Play!
-                        </Button>
-                    </Col>
+                <Row>
+                    <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                 </Row>
             </div>
         )
@@ -92,13 +95,17 @@ class RouteSearch extends Component{
         fetch("/getRoute?origin="+this.state.start+"&destination="+this.state.end).then(function(response){
             return response.json();
         }).then(function(j){
-            var imgs = []
-            s.setState({images: j})
+            var imgs = [];
+            // s.setState({images: j});
+            s.setState({images: j, index: 0, playing: false})
         })
     }
 
     handleClick() {
-        console.log(this);
+        this.playRoute();
+    }
+
+    incRoute(){
         this.setState({index: (this.state.index + 1)%this.state.images.length});
     }
 
@@ -121,12 +128,51 @@ class RouteSearch extends Component{
 
     playRoute(){
         if(!this.state.playing){
-            this.interval = setInterval(() => this.handleClick(), 100);
+            this.interval = setInterval(() => this.incRoute(), this.state.speed);
             this.setState({playing: true});
         }
         else{
             clearInterval(this.interval);
             this.setState({playing: false});
+        }
+    }
+
+    updateSpeed(delta){
+        if(!this.state.playing){
+            this.setState({speed: Math.max(10, this.state.speed + delta)});
+        }
+        else{
+            clearInterval(this.interval);
+            this.interval = setInterval(() => this.incRoute(), Math.max(10, this.state.speed + delta));
+            this.setState({speed: Math.max(10, this.state.speed + delta)});
+        }
+    }
+
+    handleKeyPress = (event) => {
+        if(document.activeElement.tagName === "INPUT") return;
+        switch(event.key){
+            case " ":
+                event.preventDefault();
+                return this.playRoute();
+            case "ArrowLeft":
+                event.preventDefault();
+                this.setState({index: Math.max(this.state.index-1, 0)})
+                return;
+            case "ArrowRight":
+                event.preventDefault();
+                this.setState({index: (this.state.index + 1)%this.state.images.length});
+                return;
+            case "ArrowUp":
+                event.preventDefault();
+                this.updateSpeed(-10);
+                return;
+            case "ArrowDown":
+                event.preventDefault();
+                this.updateSpeed(10);
+                return;
+
+            default:
+                return;
         }
     }
 }
