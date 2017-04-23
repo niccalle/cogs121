@@ -7,7 +7,7 @@ import { FormGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-
+import GoogleMapReact from 'google-map-react';
 class RouteImg extends Component{
     render() {
         return <img src={this.props.src} style={this.props.style} onClick={this.props.handleClick} alt="test"/>
@@ -15,6 +15,10 @@ class RouteImg extends Component{
 }
 
 class RouteSearch extends Component{
+    static defaultProps = {
+        center: {lat: 59.95, lng: 30.33},
+        zoom: 11
+      };
     constructor(props){
         super(props);
         this.state = {
@@ -74,6 +78,12 @@ class RouteSearch extends Component{
                 <Row>
                     <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                 </Row>
+                <div style={{width: "50%", height: "200px", margin: "auto"}}>
+                    <GoogleMapReact
+                      defaultCenter={this.props.center}
+                      defaultZoom={this.props.zoom}
+                      />
+                </div>
             </div>
         )
     }
