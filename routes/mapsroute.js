@@ -10,17 +10,36 @@ var dir_url = "https://maps.googleapis.com/maps/api/directions/json?key="+dir_AP
 function getImages(poly){
     var locations = polyline.decode(poly);
     var images = Array(locations.length);
-    for(var i = 0; i < locations.length; i++){
+    for(var i = 0; i < locations.length-1; i++){
+        var x1 = locations[i][0];
+        var y1 = locations[i][1];
+        var x2 = locations[i+1][0];
+        var y2 = locations[i+1][1];
         params = {
-            location: ""+locations[i][0]+","+locations[i][1],
+
+            location: ""+x1+","+y1,
             size: "600x300",
-            heading: 0,
+            heading: getDirection(x1,y1,x2,y2),
             fov: "120",
         }
         images[i] = gmAPI.streetView(params)
     }
     return images;
 }
+
+function getDirection(x1,y1,x2,y2){
+    var x3 = x2 - x1;
+    var y3 = y2 - y1;
+    var rad = Math.atan2(y3,x3);
+    var deg = rad * (180/Math.PI);
+
+    if(deg < 0){
+        return 360 + deg;
+    }
+    return deg;
+
+}
+
 module.exports.bikeRoute = function(req, res){
     res.send(getImages("mj`hEhqujUc@A{@AwAG]?sAEg@A{@?WE_BAk@Cm@Eq@EiAQeB_@sA]uA_@oA[o@Ms@K}@EiAAy@B[Bi@F_ANk@NwBl@oA\[JwA^gD~@c@LgCr@SFw@RcFxAy@R[JeBb@eBf@kBh@uA`@yBj@qAZ_AT_AXoErA_D|@s@PqEpA"));
 }
