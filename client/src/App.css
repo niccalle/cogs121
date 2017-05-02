@@ -1,21 +1,49 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 100px;
   padding: 20px;
   color: white;
+  display: table;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 60px;
+}
+
+.logo-container{
+    display: table-cell;
+}
+
+.middle-align{
+    display: table-cell;
+    width: 100%;
+}
+
+.navigation-container{
+    display: block;
+}
+
+ul.account-settings{
+    display: table;
+}
+
+li.li-settings{
+    display: table-cell;
+}
+
+div.div-settings{
+    margin: 0 10px 0 10px;
+    white-space: nowrap;
+}
+
+a.a-settings{
+    color: white;
+    cursor: pointer;
 }
 
 @keyframes App-logo-spin {
