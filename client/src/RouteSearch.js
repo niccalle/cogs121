@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import './RouteSearch.css';
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
@@ -8,20 +8,48 @@ import { FormControl } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
+
+
 class RouteImg extends Component{
     render() {
         return <img src={this.props.src} style={this.props.style} onClick={this.props.handleClick} alt="test"/>
     }
 }
 
+class MapPlace extends Component {
+  static propTypes = {
+    text: PropTypes.string
+  };
+
+  static defaultProps = {};
+
+  render() {
+    return (
+       <div style={this.props.style}>
+          {this.props.text}
+       </div>
+    );
+  }
+}
+
+
 class RouteSearch extends Component{
+    static propTypes = {
+        center: PropTypes.array,
+        zoom: PropTypes.number,
+        greatPlaceCoords: PropTypes.any
+    };
+
+
     static defaultProps = {
-        center: {lat: 59.95, lng: 30.33},
-        zoom: 11
+        center: [32.871798,  -117.233799],
+        zoom: 12,
+        greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
       };
     constructor(props){
         super(props);
         this.state = {
+            coords: [],
             images: [],
             start: '',
             end: '',
@@ -42,6 +70,12 @@ class RouteSearch extends Component{
         for(var i in this.state.images){
             imgs.push(this.renderImage(i));
         }
+
+        var places = [];
+        for(var i in this.state.coords){
+            places.push(this.renderPlace(i));
+        }
+
         var style = {
             "display": this.state.playing ? "none" : "inline"
         }
@@ -79,10 +113,12 @@ class RouteSearch extends Component{
                     <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                 </Row>
                 <div style={{width: "50%", height: "200px", margin: "auto"}}>
-                    <GoogleMapReact
-                      defaultCenter={this.props.center}
-                      defaultZoom={this.props.zoom}
-                      />
+                <GoogleMapReact
+                    // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
+                    center={this.props.center}
+                    zoom={this.props.zoom}>
+                    {places}
+                    </GoogleMapReact>
                 </div>
             </div>
         )
@@ -105,9 +141,10 @@ class RouteSearch extends Component{
         fetch("/getRoute?origin="+this.state.start+"&destination="+this.state.end).then(function(response){
             return response.json();
         }).then(function(j){
-            var imgs = [];
+            // var imgs = [];
             // s.setState({images: j});
-            s.setState({images: j, index: 0, playing: false})
+            // console.log(j);
+            s.setState({images: j[0], coords: j[1], index: 0, playing: false})
         })
     }
 
@@ -126,13 +163,29 @@ class RouteSearch extends Component{
         return <RouteImg key={i} src={this.state.images[i]} style={style} handleClick={() => this.handleClick()}/>;
     }
 
+    renderPlace(i) {
+        var currlat = 0;
+        var currlong = 0;
+
+        var style = {
+            "display": i == this.state.index ? "inline" : "none"
+        }
+
+        if(this.state.coords[i]){
+          currlat = this.state.coords[i][0];
+          currlong = this.state.coords[i][1];
+        }
+        return <MapPlace lat={currlat} lng={currlong} style={style} text={'YOU ARE HERE'} /* Kreyser Avrora */ />
+    }
+
     getImages(){
         var s = this;
         fetch("/bikeRoute").then(function(response){
             return response.json();
         }).then(function(j){
-            var imgs = []
-            s.setState({images: j})
+            // var imgs = []
+            // console.log(j[1][0]);
+            s.setState({images: j[0], coords: j[1]})
         })
     }
 
