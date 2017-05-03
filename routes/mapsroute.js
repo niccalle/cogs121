@@ -9,6 +9,7 @@ var dir_url = "https://maps.googleapis.com/maps/api/directions/json?key="+dir_AP
 
 function getImages(poly){
     var locations = polyline.decode(poly);
+    var coords = Array(locations.length);
     var images = Array(locations.length);
     for(var i = 0; i < locations.length-1; i++){
         var x1 = locations[i][0];
@@ -22,9 +23,11 @@ function getImages(poly){
             heading: getDirection(x1,y1,x2,y2),
             fov: "120",
         }
+        coords[i] = [x1, y1]
         images[i] = gmAPI.streetView(params)
     }
-    return images;
+
+    return [images, coords];
 }
 
 function getDirection(x1,y1,x2,y2){
