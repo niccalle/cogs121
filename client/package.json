@@ -4,11 +4,15 @@
   "private": true,
   "dependencies": {
     "google-map-react": "^0.24.0",
+    "history": "^4.6.1",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.8",
     "react-bootstrap-slider": "^1.1.7",
     "react-dom": "^15.5.4",
+    "react-facebook-login": "^3.5.1",
     "react-fetch": "0.0.9",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-slider": "^0.7.0"
   },
   "devDependencies": {

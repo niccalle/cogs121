@@ -28,32 +28,17 @@ class App extends Component {
                                 <ul className="account-settings">
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <FacebookLogin
-                                               appId="468472356817481"
-                                               autoLoad={true}
-                                               fields="name,email,picture"
-                                               onClick={() => console.log("clicked")}
-                                               callback={responseFacebook} />
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
                                             <a className="a-settings">My Account</a>
                                         </div>
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings">My Account</a>
+                                            <a className="a-settings">My Routes</a>
                                         </div>
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings">My Account</a>
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
-                                            <a className="a-settings">My Account</a>
+                                            <a className="a-settings">Settings</a>
                                         </div>
                                     </li>
                                 </ul>
