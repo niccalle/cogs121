@@ -3,6 +3,13 @@ import RouteSearch from './RouteSearch'
 
 import logo from './logo.svg';
 import './App.css';
+import FacebookLogin from 'react-facebook-login';
+
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
+
 class App extends Component {
 
     render() {
@@ -21,7 +28,12 @@ class App extends Component {
                                 <ul className="account-settings">
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings"><div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div></a>
+                                            <FacebookLogin
+                                               appId="468472356817481"
+                                               autoLoad={true}
+                                               fields="name,email,picture"
+                                               onClick={() => console.log("clicked")}
+                                               callback={responseFacebook} />
                                         </div>
                                     </li>
                                     <li className="li-settings">
@@ -54,14 +66,6 @@ class App extends Component {
         );
     }
 
-    componentWillMount() {
-        const script = document.createElement("script");
-
-        script.src = "/fbinit.js";
-        script.async = true;
-
-        document.body.appendChild(script);
-    }
 }
 
 export default App;

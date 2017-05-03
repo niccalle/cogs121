@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "root",
+    "host": "localhost",
+    "port": "8889",
+    "database": "route_preview"
+  },
+
+  "test": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "root",
+    "host": "localhost",
+    "database": "route_preview"
+  },
+
+  "prod": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "root",
+    "host": "localhost",
+    "database": "route_preview"
+  }
+}
