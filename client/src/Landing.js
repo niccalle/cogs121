@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import "./Landing.css"
 import FacebookLogin from 'react-facebook-login';
+import Cookies from 'universal-cookie';
 
+const cookie = new Cookies();
 class Landing extends Component{
     responseFacebook = (response) => {
+        console.log(cookie.getAll());
         if('accessToken' in response)
             this.props.history.push("/home");
     }

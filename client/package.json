@@ -13,7 +13,8 @@
     "react-fetch": "0.0.9",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-slider": "^0.7.0"
+    "react-slider": "^0.7.0",
+    "universal-cookie": "^2.0.5"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
