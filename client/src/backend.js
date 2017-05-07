@@ -55,6 +55,7 @@ class Backend {
             destination: destination,
             travelMode: window.google.maps.TravelMode.DRIVING,
         }, (body, status) => {
+            console.log(body);
             if (status === window.google.maps.DirectionsStatus.OK) {
                 cb(this.getImages(body.routes[0].overview_polyline));
             } else {

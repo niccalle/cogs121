@@ -29,7 +29,7 @@ class Search extends Component{
                     {along}
                     <Row>
                         <Col md={12}>
-                            <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={this.props.handeChange}/>
+                            <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={this.props.handleChange}/>
                         </Col>
                     </Row>
 

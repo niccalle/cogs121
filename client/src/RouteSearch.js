@@ -117,9 +117,10 @@ class RouteSearch extends Component{
     }
 
     handleChange( event ) {
+        var name = event.target.id;
         var wayInd = event.target.id.search("way");
         //If it's not a waypoint
-        if(wayInd == -1)
+        if(name === "start" || name === "end")
             this.setState( {[event.target.id]: event.target.value});
         else {
             var index = parseInt(event.target.id[3]);
