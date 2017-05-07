@@ -5,14 +5,33 @@
 
 .route-gif{
     text-align: center;
+    position: relative;
 }
 
 .play-route{
     text-align: center;
 }
 
-.playWrapper .playBtn {
+/*.playWrapper .playBtn {
   position: absolute; z-index: 2;
   width: 50px; height: 50px;
-  left: 50px; right: 0; top: -75px; bottom: 0; margin: auto; /* center */
+  left: 50px; right: 0; top: -75px; bottom: 0; margin: auto;
+}*/
+
+a.playWrapper {
+    position: absolute;
+    top:50%;
+}
+
+img.route-img {
+    width: 100%;
+}
+
+ul {
+    padding-left: 0;
+}
+
+.search-box-input{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

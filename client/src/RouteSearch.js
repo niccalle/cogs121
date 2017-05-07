@@ -1,18 +1,16 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './RouteSearch.css';
-import { Button } from 'react-bootstrap';
-import { ButtonToolbar } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
-import { FormGroup } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
-
+import Backend from './backend';
+import Search from './Search';
+var backend = new Backend();
 
 class RouteImg extends Component{
     render() {
-        return <img src={this.props.src} style={this.props.style} onClick={this.props.handleClick} alt="test"/>
+        return <img src={this.props.src} className="route-img" style={this.props.style} onClick={this.props.handleClick} alt="test"/>
     }
 }
 
@@ -58,11 +56,10 @@ class RouteSearch extends Component{
             speed: 100
         }
         //Binding so we can call 'this' inside the methods
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.playRoute = this.playRoute.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
+        //this.playRoute = this.playRoute.bind(this);
         //Load the intial images
-        this.getImages();
     }
 
     render(){
@@ -82,51 +79,42 @@ class RouteSearch extends Component{
         document.body.addEventListener('keydown', this.handleKeyPress);
         return (
             <div className="container">
-                <div className="start-end">
-                    <Form>
-                        <Row>
-                            <FormGroup>
-                                <Col md={5}>
-                                    <FormControl type="text" placeholder="Start" id="start" onChange={this.handleChange}/>
-                                </Col>
-                                <Col md={5}>
-                                    <FormControl type="text" placeholder="End" id="end" onChange={this.handleChange}/>
-                                </Col>
-                                <Col md={2}>
-                                    <Button bsStyle="success" onClick={this.handleSubmit} block>
-                                        Preview Route!
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Row>
-                    </Form>
-                </div>
-                <div className="route-gif">
-                    <a href="#" className="playWrapper">
-                        <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
-                    </a>
-                    <ul>
-                        {imgs}
-                    </ul>
-                </div>
                 <Row>
-                    <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
+                    <Col md={3}>
+                        <div className="start-end">
+                            <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
+                        </div>
+                    </Col>
+                    <Col md={9}>
+                        <div className="route-gif">
+                            <a href="#" className="playWrapper">
+                                <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
+                            </a>
+                            <ul>
+                                {imgs}
+                            </ul>
+                        </div>
+                        <Row>
+                            <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
+                        </Row>
+                        <div style={{width: "100%", height: "200px", margin: "auto"}}>
+                        <GoogleMapReact
+                            // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
+                            center={this.props.center}
+                            zoom={this.props.zoom}>
+                            {places}
+                            </GoogleMapReact>
+                        </div>
+                    </Col>
                 </Row>
-                <div style={{width: "50%", height: "200px", margin: "auto"}}>
-                <GoogleMapReact
-                    // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
-                    center={this.props.center}
-                    zoom={this.props.zoom}>
-                    {places}
-                    </GoogleMapReact>
-                </div>
             </div>
         )
     }
 
-    /*
-    * Updates the state values whenever any keyboard input is pressed
-    */
+    componentDidMount() {
+        this.getImages();
+    }
+
     handleChange( event ) {
         this.setState( {[event.target.id]: event.target.value});
     }
@@ -137,15 +125,12 @@ class RouteSearch extends Component{
     handleSubmit( event ) {
         console.log(this);
         event.preventDefault();
-        var s = this;
-        fetch("/getRoute?origin="+this.state.start+"&destination="+this.state.end).then(function(response){
-            return response.json();
-        }).then(function(j){
-            // var imgs = [];
-            // s.setState({images: j});
-            // console.log(j);
-            s.setState({images: j[0], coords: j[1], index: 0, playing: false})
-        })
+
+        //Callback to update the UI once our API call has finished.
+        var callback = (res) => {
+            this.setState({images: res[0], coords: res[1]});
+        }
+        backend.getRoute(this.state.start, this.state.end, callback);
     }
 
     handleClick() {
@@ -179,14 +164,9 @@ class RouteSearch extends Component{
     }
 
     getImages(){
-        var s = this;
-        fetch("/bikeRoute").then(function(response){
-            return response.json();
-        }).then(function(j){
-            // var imgs = []
-            // console.log(j[1][0]);
-            s.setState({images: j[0], coords: j[1]})
-        })
+        var res = backend.bikeRoute();
+        console.log(res);
+        this.setState({images: res[0], coords: res[1]});
     }
 
     playRoute(){

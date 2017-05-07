@@ -3,14 +3,14 @@ import RouteSearch from './RouteSearch'
 
 import logo from './logo.svg';
 import './App.css';
-import FacebookLogin from 'react-facebook-login';
+import Cookies from 'universal-cookie';
 
-
-const responseFacebook = (response) => {
-  console.log(response);
-}
+const cookie = new Cookies();
 
 class App extends Component {
+    constructor(props){
+        super(props);
+    }
 
     render() {
         return (
