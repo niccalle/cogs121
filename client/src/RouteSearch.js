@@ -51,6 +51,7 @@ class RouteSearch extends Component{
             images: [],
             start: '',
             end: '',
+            waypoints: [],
             index: 0,
             playing: false,
             speed: 100
@@ -116,7 +117,16 @@ class RouteSearch extends Component{
     }
 
     handleChange( event ) {
-        this.setState( {[event.target.id]: event.target.value});
+        var wayInd = event.target.id.search("way");
+        //If it's not a waypoint
+        if(wayInd == -1)
+            this.setState( {[event.target.id]: event.target.value});
+        else {
+            var index = parseInt(event.target.id[3]);
+            var waypoints = this.state.waypoints;
+            waypoints[index] = event.target.value;
+            this.setState({waypoints: waypoints});
+        }
     }
 
     /*
@@ -130,7 +140,7 @@ class RouteSearch extends Component{
         var callback = (res) => {
             this.setState({images: res[0], coords: res[1]});
         }
-        backend.getRoute(this.state.start, this.state.end, callback);
+        backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
     }
 
     handleClick() {

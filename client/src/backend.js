@@ -46,7 +46,7 @@ class Backend {
         return this.getImages("mj`hEhqujUc@A{@AwAG]?sAEg@A{@?WE_BAk@Cm@Eq@EiAQeB_@sA]uA_@oA[o@Ms@K}@EiAAy@B[Bi@F_ANk@NwBl@oA\[JwA^gD~@c@LgCr@SFw@RcFxAy@R[JeBb@eBf@kBh@uA`@yBj@qAZ_AT_AXoErA_D|@s@PqEpA");
     }
 
-    getRoute = function(origin, destination, cb){
+    getRoute = function(origin, destination, waypoints, cb){
         console.log(window.google);
         const DirectionsService = new window.google.maps.DirectionsService();
 
