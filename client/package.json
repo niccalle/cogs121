@@ -5,6 +5,7 @@
   "dependencies": {
     "@mapbox/polyline": "^0.2.0",
     "google-map-react": "^0.24.0",
+    "googlemaps": "^1.12.0",
     "history": "^4.6.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
