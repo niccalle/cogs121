@@ -54,6 +54,7 @@ class RouteSearch extends Component{
             start: '',
             end: '',
             waypoints: [],
+            final_way: [],
             index: 0,
             playing: false,
             speed: 100,
@@ -81,7 +82,7 @@ class RouteSearch extends Component{
           console.log(start);
           end = this.state.coords[this.state.coords.length-3];
           console.log(end);
-          waypoints = this.state.waypoints;
+          waypoints = this.state.final_way;
         }
         var imgs = []
         for(var i in this.state.images){
@@ -128,7 +129,7 @@ class RouteSearch extends Component{
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                         </Row>
                         <div style={{width: "100%", height: "200px", margin: "auto"}}>
-                        
+
                             <DirectionsExample start={start} end={end} waypoints={waypoints}/>
 
                         </div>
@@ -138,8 +139,8 @@ class RouteSearch extends Component{
         )
     }
 
-    /* 
-     * Handles when someone clicks on the stars 
+    /*
+     * Handles when someone clicks on the stars
      */
     onStarClick(nextValue, prevValue, name) {
         this.setState ({rating: nextValue});
@@ -172,7 +173,7 @@ class RouteSearch extends Component{
 
         //Callback to update the UI once our API call has finished.
         var callback = (res) => {
-            this.setState({images: res[0], coords: res[1]});
+            this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints});
         }
         backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
     }
