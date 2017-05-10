@@ -4,8 +4,10 @@ import './RouteSearch.css';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import Backend from './backend';
 import Search from './Search';
+import DirectionsExample from "./DirectionsExample"
 var backend = new Backend();
 
 class RouteImg extends Component{
@@ -64,6 +66,18 @@ class RouteSearch extends Component{
     }
 
     render(){
+        var start = []
+        var end = []
+        if(this.state.coords.length == 0){
+          start = [41.8507300, -87.6512600]
+          end = [41.8525800, -87.6514100]
+        }
+        else{
+          start = this.state.coords[0];
+          console.log(start);
+          end = this.state.coords[this.state.coords.length-3];
+          console.log(end);
+        }
         var imgs = []
         for(var i in this.state.images){
             imgs.push(this.renderImage(i));
@@ -99,12 +113,9 @@ class RouteSearch extends Component{
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                         </Row>
                         <div style={{width: "100%", height: "200px", margin: "auto"}}>
-                        <GoogleMapReact
-                            // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
-                            center={this.props.center}
-                            zoom={this.props.zoom}>
-                            {places}
-                            </GoogleMapReact>
+                        
+                            <DirectionsExample start={start} end={end}/>
+
                         </div>
                     </Col>
                 </Row>

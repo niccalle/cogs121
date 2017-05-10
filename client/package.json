@@ -5,6 +5,7 @@
   "dependencies": {
     "@mapbox/polyline": "^0.2.0",
     "google-map-react": "^0.24.0",
+    "googlemaps": "^1.12.0",
     "history": "^4.6.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -13,6 +14,7 @@
     "react-dom": "^15.5.4",
     "react-facebook-login": "^3.5.1",
     "react-fetch": "0.0.9",
+    "react-google-maps": "^6.3.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-slider": "^0.7.0",
