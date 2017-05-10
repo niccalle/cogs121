@@ -14,9 +14,11 @@
     "react-dom": "^15.5.4",
     "react-facebook-login": "^3.5.1",
     "react-fetch": "0.0.9",
+    "react-google-maps": "^6.3.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-slider": "^0.7.0",
+    "react-star-rating-component": "^1.2.4",
     "universal-cookie": "^2.0.5"
   },
   "devDependencies": {

@@ -4,8 +4,11 @@ import './RouteSearch.css';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import Backend from './backend';
 import Search from './Search';
+import DirectionsExample from "./DirectionsExample";
+import StarRatingComponent from 'react-star-rating-component';
 var backend = new Backend();
 
 class RouteImg extends Component{
@@ -30,7 +33,6 @@ class MapPlace extends Component {
   }
 }
 
-
 class RouteSearch extends Component{
     static propTypes = {
         center: PropTypes.array,
@@ -54,7 +56,8 @@ class RouteSearch extends Component{
             waypoints: [],
             index: 0,
             playing: false,
-            speed: 100
+            speed: 100,
+            rating: 0
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -64,6 +67,22 @@ class RouteSearch extends Component{
     }
 
     render(){
+        const { rating } = this.state;
+        var start = []
+        var end = []
+        var waypoints = []
+        if(this.state.coords.length == 0){
+          start = [41.8507300, -87.6512600]
+          end = [41.8525800, -87.6514100]
+          waypoints = []
+        }
+        else{
+          start = this.state.coords[0];
+          console.log(start);
+          end = this.state.coords[this.state.coords.length-3];
+          console.log(end);
+          waypoints = this.state.waypoints;
+        }
         var imgs = []
         for(var i in this.state.images){
             imgs.push(this.renderImage(i));
@@ -85,6 +104,16 @@ class RouteSearch extends Component{
                         <div className="start-end">
                             <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
                         </div>
+                        <Row>
+                        <div className="starRatings">
+                        <StarRatingComponent
+                            name="rate"
+                            starCount={5}
+                            value={rating}
+                            onStarClick={this.onStarClick.bind(this)}
+                        />
+                        </div>
+                        </Row>
                     </Col>
                     <Col md={9}>
                         <div className="route-gif">
@@ -99,17 +128,21 @@ class RouteSearch extends Component{
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                         </Row>
                         <div style={{width: "100%", height: "200px", margin: "auto"}}>
-                        <GoogleMapReact
-                            // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
-                            center={this.props.center}
-                            zoom={this.props.zoom}>
-                            {places}
-                            </GoogleMapReact>
+                        
+                            <DirectionsExample start={start} end={end} waypoints={waypoints}/>
+
                         </div>
                     </Col>
                 </Row>
             </div>
         )
+    }
+
+    /* 
+     * Handles when someone clicks on the stars 
+     */
+    onStarClick(nextValue, prevValue, name) {
+        this.setState ({rating: nextValue});
     }
 
     componentDidMount() {
