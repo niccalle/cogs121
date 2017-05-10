@@ -72,6 +72,7 @@ class RouteSearch extends Component{
         var start = []
         var end = []
         var waypoints = []
+        var curr = []
         if(this.state.coords.length == 0){
           start = [41.8507300, -87.6512600]
           end = [41.8525800, -87.6514100]
@@ -79,9 +80,8 @@ class RouteSearch extends Component{
         }
         else{
           start = this.state.coords[0];
-          console.log(start);
           end = this.state.coords[this.state.coords.length-3];
-          console.log(end);
+          curr = this.state.coords[this.state.index];
           waypoints = this.state.final_way;
         }
         var imgs = []
@@ -97,6 +97,8 @@ class RouteSearch extends Component{
         var style = {
             "display": this.state.playing ? "none" : "inline"
         }
+
+
         document.body.addEventListener('keydown', this.handleKeyPress);
         return (
             <div className="container">
@@ -130,7 +132,7 @@ class RouteSearch extends Component{
                         </Row>
                         <div style={{width: "100%", height: "200px", margin: "auto"}}>
 
-                            <DirectionsExample start={start} end={end} waypoints={waypoints}/>
+                            <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
 
                         </div>
                     </Col>
@@ -168,7 +170,6 @@ class RouteSearch extends Component{
     * Makes an API request when submit is clicked
     */
     handleSubmit( event ) {
-        console.log(this);
         event.preventDefault();
 
         //Callback to update the UI once our API call has finished.
@@ -210,7 +211,6 @@ class RouteSearch extends Component{
 
     getImages(){
         var res = backend.bikeRoute();
-        console.log(res);
         this.setState({images: res[0], coords: res[1]});
     }
 
