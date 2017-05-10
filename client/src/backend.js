@@ -48,11 +48,24 @@ class Backend {
 
     getRoute = function(origin, destination, waypoints, cb){
         console.log(window.google);
+        console.log("WAYPOINTS, origin");
+        console.log(waypoints, origin);
         const DirectionsService = new window.google.maps.DirectionsService();
+
+        //Creates waypoint JSON
+        var wp = []; 
+        for( var i in waypoints){
+            console.log(i, waypoints[i]);
+            wp.push({
+                location: waypoints[i],
+                stopover: true
+            })
+        }
 
         DirectionsService.route({
             origin: origin,
             destination: destination,
+            waypoints: wp,
             travelMode: window.google.maps.TravelMode.DRIVING,
         }, (body, status) => {
             console.log(body);
@@ -72,6 +85,10 @@ class Backend {
         //     //res.send(getImages(poly));
         // })
 
+    }
+
+    getWaypointArray(waypoints){
+        
     }
 }
 
