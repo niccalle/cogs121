@@ -67,7 +67,17 @@ class Backend {
             travelMode: window.google.maps.TravelMode.DRIVING,
         }, (body, status) => {
             if (status === window.google.maps.DirectionsStatus.OK) {
-                cb(this.getImages(body.routes[0].overview_polyline));
+                var directions = [];
+                //TODO: parse the body for a list of directinos
+                directions = body.routes[0].legs[0].steps;
+
+                var dir = [];
+                for(var i in directions){
+                    dir.push(directions[i].instructions);
+                }
+
+                console.log(dir);
+                cb(this.getImages(body.routes[0].overview_polyline), dir);
             } else {
                 console.error(`error fetching directions ${body}`);
             }

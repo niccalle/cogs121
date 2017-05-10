@@ -58,7 +58,8 @@ class RouteSearch extends Component{
             index: 0,
             playing: false,
             speed: 100,
-            rating: 0
+            rating: 0,
+            directions: []
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -100,6 +101,10 @@ class RouteSearch extends Component{
 
 
         document.body.addEventListener('keydown', this.handleKeyPress);
+        var directions = [];
+        for (var direction in this.state.directions){
+            directions.push(<li dangerouslySetInnerHTML={{__html: this.state.directions[direction]}} ></li>)
+        }
         return (
             <div className="container">
                 <Row>
@@ -116,6 +121,11 @@ class RouteSearch extends Component{
                             onStarClick={this.onStarClick.bind(this)}
                         />
                         </div>
+                        </Row>
+                        <Row>
+                            <ul>
+                                {directions}
+                            </ul>
                         </Row>
                     </Col>
                     <Col md={9}>
@@ -173,8 +183,8 @@ class RouteSearch extends Component{
         event.preventDefault();
 
         //Callback to update the UI once our API call has finished.
-        var callback = (res) => {
-            this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints});
+        var callback = (res, directions) => {
+            this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, directions: directions});
         }
         backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
     }
