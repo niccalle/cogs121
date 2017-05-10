@@ -68,15 +68,18 @@ class RouteSearch extends Component{
     render(){
         var start = []
         var end = []
+        var waypoints = []
         if(this.state.coords.length == 0){
           start = [41.8507300, -87.6512600]
           end = [41.8525800, -87.6514100]
+          waypoints = []
         }
         else{
           start = this.state.coords[0];
           console.log(start);
           end = this.state.coords[this.state.coords.length-3];
           console.log(end);
+          waypoints = this.state.waypoints;
         }
         var imgs = []
         for(var i in this.state.images){
@@ -114,7 +117,7 @@ class RouteSearch extends Component{
                         </Row>
                         <div style={{width: "100%", height: "200px", margin: "auto"}}>
                         
-                            <DirectionsExample start={start} end={end}/>
+                            <DirectionsExample start={start} end={end} waypoints={waypoints}/>
 
                         </div>
                     </Col>

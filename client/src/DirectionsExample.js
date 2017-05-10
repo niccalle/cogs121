@@ -24,11 +24,14 @@ export default class DirectionsExample extends Component {
           origin: new window.google.maps.LatLng(41.8507300, -87.6512600),
           destination: new window.google.maps.LatLng(41.8525800, -87.6514100),
           directions: null,
+          waypoints: null,
         }
   state = {
     origin: new window.google.maps.LatLng(this.props.start[0], this.props.start[1]),
     destination: new window.google.maps.LatLng(this.props.end[0], this.props.end[1]),
     directions: null,
+    waypoints: this.props.waypoints,
+
   }
 
   // constructor(){
@@ -74,9 +77,21 @@ export default class DirectionsExample extends Component {
     console.log("dest" + this.state.destination);
     var origin = new window.google.maps.LatLng(this.props.start[0], this.props.start[1]);
     var destination = new window.google.maps.LatLng(this.props.end[0], this.props.end[1]);
+
+    var wp = []; 
+    for( var i in this.props.waypoints){
+      console.log(i, this.props.waypoints[i]);
+      wp.push({
+        location: this.props.waypoints[i],
+        stopover: true
+      })
+    }
+    
+
     DirectionsService.route({
       origin: origin,
       destination: destination,
+      waypoints: wp,
       travelMode: window.google.maps.TravelMode.DRIVING,
     }, (result, status) => {
       if (status === window.google.maps.DirectionsStatus.OK) {
