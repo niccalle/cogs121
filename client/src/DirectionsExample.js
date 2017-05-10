@@ -14,6 +14,7 @@ import {withGoogleMap,
             <GoogleMap
                 defaultZoom={7}
                 defaultCenter={props.center}
+                bootstrapURLKeys={{key: "AIzaSyBI5nHZDXjttXU7IwqKYbzr8XzLLFAquC0"}}
                 >
                 {props.directions && <DirectionsRenderer directions={props.directions} />}
                 {props.markers.map((marker, index) => {

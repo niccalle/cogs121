@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './RouteSearch.css';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import Backend from './backend';
 import Search from './Search';
