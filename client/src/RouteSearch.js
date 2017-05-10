@@ -7,7 +7,8 @@ import GoogleMapReact from 'google-map-react';
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import Backend from './backend';
 import Search from './Search';
-import DirectionsExample from "./DirectionsExample"
+import DirectionsExample from "./DirectionsExample";
+import StarRatingComponent from 'react-star-rating-component';
 var backend = new Backend();
 
 class RouteImg extends Component{
@@ -32,7 +33,6 @@ class MapPlace extends Component {
   }
 }
 
-
 class RouteSearch extends Component{
     static propTypes = {
         center: PropTypes.array,
@@ -56,7 +56,8 @@ class RouteSearch extends Component{
             waypoints: [],
             index: 0,
             playing: false,
-            speed: 100
+            speed: 100,
+            rating: 0
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -66,6 +67,7 @@ class RouteSearch extends Component{
     }
 
     render(){
+        const { rating } = this.state;
         var start = []
         var end = []
         var waypoints = []
@@ -102,6 +104,16 @@ class RouteSearch extends Component{
                         <div className="start-end">
                             <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
                         </div>
+                        <Row>
+                        <div className="starRatings">
+                        <StarRatingComponent
+                            name="rate"
+                            starCount={5}
+                            value={rating}
+                            onStarClick={this.onStarClick.bind(this)}
+                        />
+                        </div>
+                        </Row>
                     </Col>
                     <Col md={9}>
                         <div className="route-gif">
@@ -124,6 +136,13 @@ class RouteSearch extends Component{
                 </Row>
             </div>
         )
+    }
+
+    /* 
+     * Handles when someone clicks on the stars 
+     */
+    onStarClick(nextValue, prevValue, name) {
+        this.setState ({rating: nextValue});
     }
 
     componentDidMount() {
