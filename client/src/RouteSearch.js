@@ -53,6 +53,8 @@ class RouteSearch extends Component{
             images: [],
             start: '',
             end: '',
+            final_start: '',
+            final_end: '',
             waypoints: [],
             final_way: [],
             index: 0,
@@ -128,7 +130,12 @@ class RouteSearch extends Component{
                             </ul>
                         </Row>
                     </Col>
+                    {
+                    this.state.final_start != ""
+                    && this.state.final_end != ""
+                    && (
                     <Col md={9}>
+
                         <div className="route-gif">
                             <a href="#" className="playWrapper">
                                 <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
@@ -145,7 +152,9 @@ class RouteSearch extends Component{
                             <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
 
                         </div>
+
                     </Col>
+                    )}
                 </Row>
             </div>
         )
@@ -159,7 +168,7 @@ class RouteSearch extends Component{
     }
 
     componentDidMount() {
-        this.getImages();
+        //this.getImages();
     }
 
     handleChange( event ) {
@@ -184,7 +193,23 @@ class RouteSearch extends Component{
 
         //Callback to update the UI once our API call has finished.
         var callback = (res, directions) => {
-            this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, directions: directions});
+            var routeId = this.getRouteId();
+            window.firebase.database().ref("routes/"+routeId).once("value").then((snapshot) => {
+                //If this is the first time someone has viewed the route
+                if(!snapshot.val()){
+                    window.firebase.database().ref('routes/'+routeId).set({
+                        start: this.state.start,
+                        end: this.state.end,
+                        views: 1
+                    })
+                }
+                else{
+                    window.firebase.database().ref('routes/'+routeId).update({
+                        views: parseInt(snapshot.child("views").val()) + 1
+                    })
+                }
+                this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, final_start: this.state.start, final_end: this.state.end, directions: directions});
+            })
         }
         backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
     }
@@ -272,6 +297,19 @@ class RouteSearch extends Component{
             default:
                 return;
         }
+    }
+
+    /*Probably gonna have to find a better way to store the routes in the database
+      as of right now, its just gonna be a string thats
+      "start-waypoints-end"*/
+    getRouteId(){
+        var returnString = this.state.start;
+        for(var i in this.state.waypoints){
+            returnString += "-"+this.state.waypoints[i];
+        }
+        returnString += "-"+this.state.end;
+
+        return returnString;
     }
 }
 

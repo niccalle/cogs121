@@ -48,11 +48,11 @@ class Backend {
 
     getRoute = function(origin, destination, waypoints, cb){
         console.log(window.google);
-        
+
         const DirectionsService = new window.google.maps.DirectionsService();
 
         //Creates waypoint JSON
-        var wp = []; 
+        var wp = [];
         for( var i in waypoints){
             wp.push({
                 location: waypoints[i],

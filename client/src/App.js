@@ -8,8 +8,59 @@ import Cookies from 'universal-cookie';
 const cookie = new Cookies();
 
 class App extends Component {
+    provider = null
+
     constructor(props){
         super(props);
+        this.state = {
+            authenticated: false,
+            user: null,
+            accessToken: ""
+        }
+    }
+
+
+    componentDidMount(){
+        // window.gapi.signin2.render('g-signin2', {
+        //     'scope': 'https://www.googleapis.com/auth/plus.login',
+        //     'longtitle': true,
+        //     'onsuccess': (g) => this.onSignIn(g)
+        //   });
+        this.provider = new window.firebase.auth.GoogleAuthProvider();
+        this.provider.addScope('https://www.googleapis.com/auth/plus.login');
+    }
+
+    onSignIn(google_user){
+        console.log("SIGNED IN");
+        console.log(google_user);
+    }
+
+    handleLogin(){
+        window.firebase.auth().signInWithPopup(this.provider).then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            console.log(typeof user);
+            console.log("token: " + token)
+            console.log(user)
+            window.firebase.database().ref('users/'+user.uid).set({
+                username: user.displayName,
+                email: user.email,
+            })
+            this.setState({authenticated: true, user: user, accessToken: token});
+
+            // ...
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
     }
 
     render() {
@@ -26,6 +77,13 @@ class App extends Component {
                         <div className="navigation-container">
                             <nav>
                                 <ul className="account-settings">
+                                    { this.state.authenticated && (
+                                    <div>
+                                    <li className="li-settings">
+                                        <div className="div-settings" onClick={()=>this.handleLogin()}>
+                                            <a className="a-settings">LOGOUT</a>
+                                        </div>
+                                    </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
                                             <a className="a-settings">My Account</a>
@@ -41,12 +99,22 @@ class App extends Component {
                                             <a className="a-settings">Settings</a>
                                         </div>
                                     </li>
+                                    </div>
+                                    )}
+                                    {
+                                        !this.state.authenticated && (
+                                        <li className="li-settings">
+                                            <div className="div-settings" onClick={()=>this.handleLogin()}>
+                                                <a className="a-settings">LOGIN</a>
+                                            </div>
+                                        </li>)
+                                    }
                                 </ul>
                             </nav>
                         </div>
+                    </div>
                 </div>
-                </div>
-                <RouteSearch/>
+                <RouteSearch user={this.state.user} token={this.state.accessToken} authenticated={this.state.authenticated}/>
             </div>
         );
     }
