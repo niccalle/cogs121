@@ -200,6 +200,7 @@ class RouteSearch extends Component{
                     window.firebase.database().ref('routes/'+routeId).set({
                         start: this.state.start,
                         end: this.state.end,
+                        image: res[0][0],
                         views: 1
                     })
                 }
