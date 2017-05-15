@@ -108,26 +108,36 @@ class RouteSearch extends Component{
             directions.push(<li dangerouslySetInnerHTML={{__html: this.state.directions[direction]}} ></li>)
         }
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <Row>
                     <Col md={3}>
-                        <div className="start-end">
-                            <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
-                        </div>
                         <Row>
-                        <div className="starRatings">
-                        <StarRatingComponent
-                            name="rate"
-                            starCount={5}
-                            value={rating}
-                            onStarClick={this.onStarClick.bind(this)}
-                        />
-                        </div>
+                            <div style={{padding:"7px", width: "100%", height: "340px", margin: "auto"}}>
+                                <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
+                            </div>
                         </Row>
                         <Row>
-                            <ul>
-                                {directions}
-                            </ul>
+                            <div className="start-end">
+                                <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
+                            </div>
+                        </Row>
+                        <Row>
+                            <div className="starRatings">
+                            <StarRatingComponent
+                                name="rate"
+                                starCount={5}
+                                value={rating}
+                                onStarClick={this.onStarClick.bind(this)}
+                            />
+                            </div>
+                        </Row>
+                        <Row>
+                                <h3 className="directions-heading"> Directions </h3>
+                            <div className="directions">
+                                <ul className="directions-list">
+                                    {directions}
+                                </ul>
+                            </div>
                         </Row>
                     </Col>
                     {
@@ -147,12 +157,6 @@ class RouteSearch extends Component{
                         <Row>
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
                         </Row>
-                        <div style={{width: "100%", height: "200px", margin: "auto"}}>
-
-                            <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
-
-                        </div>
-
                     </Col>
                     )}
                 </Row>
