@@ -168,7 +168,28 @@ class RouteSearch extends Component{
     }
 
     componentDidMount() {
-        //this.getImages();
+        var routeId = this.props.match.params.routeid;
+        if(routeId != ""){
+            window.firebase.database().ref("routes/"+routeId).once("value").then((snapshot)=>{
+                var start = snapshot.child("start").val();
+                var end = snapshot.child("end").val();
+                /*TODO: Add rating and views here later*/
+                window.firebase.database().ref('routes/'+routeId).update({
+                    views: parseInt(snapshot.child("views").val()) + 1
+                })
+                var callback = (res, directions) => {
+                    this.setState({images: res[0],
+                        coords: res[1],
+                        final_way: this.state.waypoints,
+                        final_start: start,
+                        start: start,
+                        end: end,
+                        final_end: end,
+                        directions: directions});
+                }
+                backend.getRoute(start, end, [], callback);
+            })
+        }
     }
 
     handleChange( event ) {

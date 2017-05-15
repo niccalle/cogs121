@@ -114,8 +114,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                {<RouteSearch user={this.state.user} token={this.state.accessToken} authenticated={this.state.authenticated}/>}
-                {/*<TopRoutes/>*/}
+                {this.props.children}
             </div>
         );
     }
