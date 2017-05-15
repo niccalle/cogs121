@@ -132,9 +132,12 @@ class RouteSearch extends Component{
                             </div>
                         </Row>
                         <Row>
-                            <ul>
-                                {directions}
-                            </ul>
+                                <h3 className="directions-heading"> Directions </h3>
+                            <div className="directions">
+                                <ul className="directions-list">
+                                    {directions}
+                                </ul>
+                            </div>
                         </Row>
                     </Col>
                     {
