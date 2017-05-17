@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RouteSearch from './RouteSearch'
 import TopRoutes from "./TopRoutes"
 import logo from './logo.svg';
+import Link from "react-router-dom";
 import './App.css';
 import Cookies from 'universal-cookie';
 
@@ -64,6 +65,12 @@ class App extends Component {
     }
 
     render() {
+        const childrenWithProps = React.Children.map(this.props.children,
+         (child) => React.cloneElement(child, {
+           authenticated: this.state.authenticated
+         })
+        );
+
         return (
             <div>
 
@@ -91,7 +98,7 @@ class App extends Component {
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings">My Routes</a>
+                                            <Link to={'/saved/'}> My Routes</Link>
                                         </div>
                                     </li>
                                     <li className="li-settings">
@@ -114,7 +121,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                {this.props.children}
+                {childrenWithProps}
             </div>
         );
     }

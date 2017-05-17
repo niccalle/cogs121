@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './RouteSearch.css';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 // import GoogleMapReact from 'google-map-react';
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import Backend from './backend';
@@ -119,6 +120,9 @@ class RouteSearch extends Component{
                         <Row>
                             <div className="start-end">
                                 <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
+                                <Button bsStyle="success" onClick={()=> this.saveRoute()} block>
+                                    Save Route!
+                                </Button>
                             </div>
                         </Row>
                         <Row>
@@ -131,6 +135,7 @@ class RouteSearch extends Component{
                             />
                             </div>
                         </Row>
+
                         <Row>
                                 <h3 className="directions-heading"> Directions </h3>
                             <div className="directions">
@@ -336,6 +341,12 @@ class RouteSearch extends Component{
         returnString += "-"+this.state.end;
 
         return returnString;
+    }
+
+    saveRoute(){
+        var uid = window.firebase.auth().currentUser.uid;
+        var routeid = this.getRouteId();
+        window.firebase.database().ref("users/"+uid+"/routes/"+routeid+"/").update({saved: true});
     }
 }
 
