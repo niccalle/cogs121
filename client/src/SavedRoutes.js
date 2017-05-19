@@ -10,20 +10,23 @@ class SavedRoutes extends Component{
         routes: []
     }
     componentDidMount(){
+        console.log("TESTING");
         var routes = []
         var uid = window.firebase.auth().currentUser.uid;
         window.firebase.database().ref("users/"+uid+"/routes/").once("value").then((snapshot) => {
             var routes = [];
-            snapshot.forEach(function(childSnapshot){
+            snapshot.forEach((childSnapshot) => {
+                console.log(childSnapshot.key);
                 window.firebase.database().ref("routes/"+childSnapshot.key+"/").once("value").then((snapshot) => {
                     var start = snapshot.child("start").val();
                     var end = snapshot.child("end").val();
                     var views = snapshot.child("views").val();
                     var image = snapshot.child("image").val();
                     routes.push({routeId: childSnapshot.key, start: start, image: image, end: end, views: views});
+                    this.setState({routes: routes});
                 })
             })
-            this.setState({routes: routes});
+
 
         })
 

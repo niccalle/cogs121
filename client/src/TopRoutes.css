@@ -6,3 +6,8 @@ img {
     margin-top: 10px;
     border: 0.5px solid lightgrey;
 }
+
+img.card-img-top{
+    height: 200px;
+    object-fit: cover;
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RouteSearch from './RouteSearch'
 import TopRoutes from "./TopRoutes"
 import logo from './logo.svg';
-import Link from "react-router-dom";
+import { Link } from "react-router-dom";
 import './App.css';
 import Cookies from 'universal-cookie';
 
@@ -45,7 +45,7 @@ class App extends Component {
             console.log(typeof user);
             console.log("token: " + token)
             console.log(user)
-            window.firebase.database().ref('users/'+user.uid).set({
+            window.firebase.database().ref('users/'+user.uid).update({
                 username: user.displayName,
                 email: user.email,
             })
@@ -65,11 +65,11 @@ class App extends Component {
     }
 
     render() {
-        const childrenWithProps = React.Children.map(this.props.children,
-         (child) => React.cloneElement(child, {
-           authenticated: this.state.authenticated
-         })
-        );
+        // const childrenWithProps = React.Children.map(this.props.children,
+        //  (child) => React.cloneElement(child, {
+        //    authenticated: this.state.authenticated
+        //  })
+        // );
 
         return (
             <div>
@@ -98,7 +98,7 @@ class App extends Component {
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <Link to={'/saved/'}> My Routes</Link>
+                                            <Link to={'/saved'}> TESTING </Link>
                                         </div>
                                     </li>
                                     <li className="li-settings">
@@ -121,7 +121,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                {childrenWithProps}
+                {this.props.children}
             </div>
         );
     }
