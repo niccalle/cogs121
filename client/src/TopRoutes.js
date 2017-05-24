@@ -10,6 +10,9 @@ import { ButtonToolbar } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 import Backend from "./backend.js";
 var backend = new Backend();
 
@@ -54,6 +57,27 @@ class TopRoutes extends Component{
         return(
             <div>
                 <div className="container-flex row gutter-0">
+                    <Row>
+                        <Col lgOffset={3} lg={6}>
+                        <Form>
+                            <FormGroup>
+                                <FormControl type="text"
+                                    className="box-input"
+                                    placeholder="Search for a route..."
+                                    id="topRoutes_search" 
+                                    onChange={this.props.handleChange}/>
+                            </FormGroup>
+                        </Form>
+                        </Col>
+
+                        <Col md={2}>
+                            <DropdownButton title="Sort by">
+                                <MenuItem eventKey="1">Action</MenuItem>
+                                <MenuItem eventKey="2">Action2</MenuItem>
+                            </DropdownButton>
+                        </Col>
+                    </Row>
+
                     <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
                             <div className="card-block">
