@@ -15,6 +15,7 @@ class Search extends Component{
         waypoints: 0,
         start: "",
         end: "",
+        ways: [],
         startSelected: false,
         endSelected: false
     }
@@ -49,18 +50,19 @@ class Search extends Component{
                                 ref={el=>this._geoSuggest=el}
                                 placeholder="Start"
                                 inputClassName="start-input"
-                                style={{'input': {'border-color': this.state.startSelected? 'palegreen' : ""}}}
+                                style={{'input': {'borderColor': this.state.startSelected? 'palegreen' : ""}}}
                                 onSuggestSelect={(e) => this.updateStart(e)}
                                 />
                         </Col>
                     </Row>
+                    {along}
                     <Row>
                         <Col md={12}>
                             <Geosuggest
                                 placeholder="End"
                                 initialValue={this.props.initialStart}
                                 inputClassName="end-input"
-                                style={{'input': {'border-color': this.state.startSelected? 'palegreen' : ""}}}
+                                style={{'input': {'borderColor': this.state.startSelected? 'palegreen' : ""}}}
                                 onSuggestSelect={(e) => this.updateEnd(e)}/>
                         </Col>
                     </Row>
@@ -75,6 +77,13 @@ class Search extends Component{
                             {
                                 this.state.startSelected && this.state.endSelected &&(
                                     <Button bsStyle="success" className="search-box-input" onClick={() => this.props.handleClick(this.state.start, this.state.end)} block>
+                                        Preview Route!
+                                    </Button>
+                                )
+                            }
+                            {
+                                (!this.state.startSelected || !this.state.endSelected) &&(
+                                    <Button bsStyle="success" className="search-box-input" onClick={() => this.props.handleClick(this.state.start, this.state.end)} block disabled>
                                         Preview Route!
                                     </Button>
                                 )
@@ -102,10 +111,28 @@ class Search extends Component{
         return (
             <Row key={way}>
                 <Col md={12}>
-                    <FormControl type="text"  className="search-box-input" placeholder={"Stop " + way} id={"way"+way} onChange={this.props.handleChange}/>
+                    <Geosuggest
+                        ref={el=>this._geoSuggest=el}
+                        placeholder={"Stop " + way}
+                        inputClassName="start-input"
+                        style={{'input': {'borderColor': this.state.startSelected? 'palegreen' : ""}}}
+                        onSuggestSelect={(e) => this.updateWay(e, way)}
+                        />
+                    <div className="remove-way" onClick={() => this.removeWay(way)}>X</div>
                 </Col>
             </Row>
         )
+    }
+
+    removeWay(way){
+        var waypoints = this.state.ways;
+        waypoints.splice(way);
+        this.setState({ways: waypoints, waypoints: this.state.waypoints - 1});
+    }
+    updateWay(e, way){
+        var waypoints = this.state.ways;
+        waypoints[way] = e.label;
+        this.setState({ways: waypoints});
     }
 }
 

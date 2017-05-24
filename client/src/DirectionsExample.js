@@ -53,8 +53,6 @@ import {withGoogleMap,
                     this.setState({
                         directions: result,
                     });
-                } else {
-                    console.error(`error fetching directions ${result}`);
                 }
             });
         }
@@ -84,9 +82,7 @@ import {withGoogleMap,
                     this.setState({
                         directions: result,
                     });
-                } else {
-                    console.error(`error fetching directions ${result}`);
-                }
+                } 
             });
         }
 

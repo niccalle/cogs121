@@ -106,6 +106,10 @@ ul {
   -webkit-transition: max-height 0.2s, border 0.2s;
           transition: max-height 0.2s, border 0.2s;
 }
+
+.geosuggest{
+    width: 100%;
+}
 .geosuggest__suggests--hidden {
   max-height: 0;
   overflow: hidden;
@@ -132,4 +136,11 @@ ul {
 .geosuggest__item--active:hover,
 .geosuggest__item--active:focus {
   background: #ccc;
+}
+
+.remove-way{
+    position: absolute;
+    right: 5%;
+    top: 30%;
+    color: red;
 }
