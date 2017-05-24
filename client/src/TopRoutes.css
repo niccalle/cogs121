@@ -1,10 +1,21 @@
+.gutter-0.row{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.gutter-0 > [class^="col-"], .gutter-0 > [class^=" col-"] {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 img {
     width: 100%;
 }
 
 .card {
-    margin-top: 10px;
-    border: 0.5px solid lightgrey;
+    height: 300px;
+    border: 2px solid lightgrey;
+    margin: 20px;
 }
 
 img.card-img-top{
