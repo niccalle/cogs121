@@ -47,7 +47,7 @@ import {withGoogleMap,
             DirectionsService.route({
                 origin: this.state.origin,
                 destination: this.state.destination,
-                travelMode: window.google.maps.TravelMode.DRIVING,
+                travelMode: window.google.maps.TravelMode.BICYCLING,
             }, (result, status) => {
                 if (status === window.google.maps.DirectionsStatus.OK) {
                     this.setState({
@@ -78,7 +78,7 @@ import {withGoogleMap,
                 origin: origin,
                 destination: destination,
                 waypoints: wp,
-                travelMode: window.google.maps.TravelMode.DRIVING,
+                travelMode: window.google.maps.TravelMode.BICYCLING,
             }, (result, status) => {
                 if (status === window.google.maps.DirectionsStatus.OK) {
                     this.setState({
