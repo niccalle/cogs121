@@ -136,20 +136,12 @@ class RouteSearch extends Component{
                             </div>
                         </Row>
 
-                        <Row>
-                                <h3 className="directions-heading"> Directions </h3>
-                            <div className="directions">
-                                <ul className="directions-list">
-                                    {directions}
-                                </ul>
-                            </div>
-                        </Row>
                     </Col>
                     {
                     this.state.final_start != ""
                     && this.state.final_end != ""
                     && (
-                    <Col md={9}>
+                    <Col md={6}>
 
                         <div className="route-gif">
                             <a href="#" className="playWrapper">
@@ -164,6 +156,14 @@ class RouteSearch extends Component{
                         </Row>
                     </Col>
                     )}
+                    <Col md={3}>
+                              <h3 className="directions-heading"> Directions </h3>
+                          <div className="directions">
+                              <ul className="directions-list">
+                                  {directions}
+                              </ul>
+                          </div>
+                    </Col>
                 </Row>
             </div>
         )
