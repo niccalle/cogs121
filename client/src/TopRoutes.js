@@ -54,7 +54,7 @@ class TopRoutes extends Component{
         return(
             <div>
                 <div className="container-flex row gutter-0">
-                    <Col md={2}>
+                    <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
                             <img className="card-img-top" onClick={() => this.createCustomRoute()} src="http://www.clipartbest.com/cliparts/4i9/aGX/4i9aGXrET.png" alt="Card image cap"/>
                             <div className="card-block">
@@ -133,7 +133,7 @@ class TopRoutes extends Component{
 
     createRouteCard(route){
         return (
-            <Col md={2}>
+            <Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
