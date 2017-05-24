@@ -56,8 +56,10 @@ class TopRoutes extends Component{
                 <div className="container-flex row gutter-0">
                     <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
-                            <img className="card-img-top" onClick={() => this.createCustomRoute()} src="http://www.clipartbest.com/cliparts/4i9/aGX/4i9aGXrET.png" alt="Card image cap"/>
                             <div className="card-block">
+                                <div className="create-plus">
+                                    <span className="glyphicon glyphicon-plus" onClick={() => this.createCustomRoute()} ></span>
+                                </div>
                                 <h4 className="card-title">CREATE YOUR OWN</h4>
                                 <p className="card-text">custom route</p>
                             </div>
@@ -135,11 +137,13 @@ class TopRoutes extends Component{
         return (
             <Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
+                    <Link to={'/route/'+route.routeId}> 
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
-                        <h4 className="card-title"><Link to={'/route/'+route.routeId}> {route.start} to {route.end} </Link></h4>
+                        <h4 className="card-title">{route.start} to {route.end} </h4>
                         <p className="card-text">Views: {route.views}</p>
                     </div>
+                    </Link>
                 </div>
             </Col>
         )

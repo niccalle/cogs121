@@ -13,12 +13,19 @@ img {
 }
 
 .card {
-    height: 300px;
-    border: 2px solid lightgrey;
+    height: 280px;
     margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card-title{
+    text-align: center;
 }
 
-img.card-img-top{
-    height: 200px;
-    object-fit: cover;
+.card-text{
+    text-align: center;
+}
+
+.create-plus{
+    font-size: 135px;
+    text-align: center;
 }
