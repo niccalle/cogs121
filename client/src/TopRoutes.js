@@ -10,6 +10,9 @@ import { ButtonToolbar } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 import Backend from "./backend.js";
 var backend = new Backend();
 
@@ -53,11 +56,34 @@ class TopRoutes extends Component{
         }
         return(
             <div>
-                <div className="container">
-                    <Col md={4}>
+                <div className="container-flex row gutter-0">
+                    <Row>
+                        <Col lgOffset={3} lg={6}>
+                        <Form>
+                            <FormGroup>
+                                <FormControl type="text"
+                                    className="box-input"
+                                    placeholder="Search for a route..."
+                                    id="topRoutes_search" 
+                                    onChange={this.props.handleChange}/>
+                            </FormGroup>
+                        </Form>
+                        </Col>
+
+                        <Col md={2}>
+                            <DropdownButton title="Sort by">
+                                <MenuItem eventKey="1">Action</MenuItem>
+                                <MenuItem eventKey="2">Action2</MenuItem>
+                            </DropdownButton>
+                        </Col>
+                    </Row>
+
+                    <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
-                            <img className="card-img-top" onClick={() => this.createCustomRoute()} src="http://www.clipartbest.com/cliparts/4i9/aGX/4i9aGXrET.png" alt="Card image cap"/>
                             <div className="card-block">
+                                <div className="create-plus">
+                                    <span className="glyphicon glyphicon-plus" onClick={() => this.createCustomRoute()} ></span>
+                                </div>
                                 <h4 className="card-title">CREATE YOUR OWN</h4>
                                 <p className="card-text">custom route</p>
                             </div>
@@ -133,13 +159,15 @@ class TopRoutes extends Component{
 
     createRouteCard(route){
         return (
-            <Col md={4}>
+            <Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
+                    <Link to={'/route/'+route.routeId}> 
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
-                        <h4 className="card-title"><Link to={'/route/'+route.routeId}> {route.start} to {route.end} </Link></h4>
+                        <h4 className="card-title">{route.start} to {route.end} </h4>
                         <p className="card-text">Views: {route.views}</p>
                     </div>
+                    </Link>
                 </div>
             </Col>
         )

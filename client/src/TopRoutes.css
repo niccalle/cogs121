@@ -1,13 +1,31 @@
+.gutter-0.row{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.gutter-0 > [class^="col-"], .gutter-0 > [class^=" col-"] {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 img {
     width: 100%;
 }
 
 .card {
-    margin-top: 10px;
-    border: 0.5px solid lightgrey;
+    height: 280px;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card-title{
+    text-align: center;
 }
 
-img.card-img-top{
-    height: 200px;
-    object-fit: cover;
+.card-text{
+    text-align: center;
+}
+
+.create-plus{
+    font-size: 135px;
+    text-align: center;
 }
