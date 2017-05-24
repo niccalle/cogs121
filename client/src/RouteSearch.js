@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './RouteSearch.css';
+import '../assets/font-awesome-4.7.0/css/font-awesome.css'
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
@@ -11,6 +12,7 @@ import Search from './Search';
 import DirectionsExample from "./DirectionsExample";
 import StarRatingComponent from 'react-star-rating-component';
 var backend = new Backend();
+var FontAwesome = require('react-fontawesome');
 
 class RouteImg extends Component{
     render() {
@@ -62,7 +64,9 @@ class RouteSearch extends Component{
             playing: false,
             speed: 100,
             rating: 0,
-            directions: []
+            directions: [],
+            videoStatus: " fa-play",
+            currentRate: 1.0
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -119,7 +123,7 @@ class RouteSearch extends Component{
                         </Row>
                         <Row>
                             <div className="start-end">
-                                <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
+                                <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
                                 <Button bsStyle="success" onClick={()=> this.saveRoute()} block>
                                     Save Route!
                                 </Button>
@@ -142,7 +146,6 @@ class RouteSearch extends Component{
                     && this.state.final_end != ""
                     && (
                     <Col md={6}>
-
                         <div className="route-gif">
                             <a href="#" className="playWrapper">
                                 <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
@@ -153,6 +156,53 @@ class RouteSearch extends Component{
                         </div>
                         <Row>
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
+
+
+                            <Button
+                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
+                                    onClick={() => this.playRoute()} block>
+                                    <FontAwesome
+                                        className='super-crazy-colors'
+                                        name={this.state.videoStatus}
+                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                            </Button>
+                            <Button
+                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
+                                    onClick={() => this.changeVideo("ArrowLeft")} block>
+                                    <FontAwesome
+                                        className='super-crazy-colors'
+                                        name=" fa-step-backward"
+                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                            </Button>
+                            <Button
+                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
+                                    onClick={() => this.changeVideo("ArrowRight")} block>
+                                    <FontAwesome
+                                        className='super-crazy-colors'
+                                        name=" fa-step-forward"
+                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                            </Button>
+
+                            <Button bsStyle="danger"
+                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
+                                    onClick={()=> this.resetRoute()} block>
+                                    <FontAwesome
+                                        className='super-crazy-colors'
+                                        name=" fa-fast-backward"
+                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button bsStyle="warning"
+                                    style = {{padding:"7px", width: "10%", margin: "auto", display: "inline"}}
+                                    onClick={()=> this.changeVideo("ArrowUp")} block >
+                                    Speed Increase
+                            </Button>
+                            <Button bsStyle="warning"
+                                    style = {{padding:"7px", width: "10%", margin: "auto", display: "inline"}}
+                                    onClick={()=> this.changeVideo("ArrowDown")} block>
+                                    Speed Decrease
+                            </Button>
                         </Row>
                     </Col>
                     )}
@@ -218,8 +268,7 @@ class RouteSearch extends Component{
     /*
     * Makes an API request when submit is clicked
     */
-    handleSubmit( event ) {
-        event.preventDefault();
+    handleSubmit( start, end ) {
 
         //Callback to update the UI once our API call has finished.
         var callback = (res, directions) => {
@@ -228,8 +277,8 @@ class RouteSearch extends Component{
                 //If this is the first time someone has viewed the route
                 if(!snapshot.val()){
                     window.firebase.database().ref('routes/'+routeId).set({
-                        start: this.state.start,
-                        end: this.state.end,
+                        start: start,
+                        end: end,
                         image: res[0][0],
                         views: 1
                     })
@@ -239,10 +288,10 @@ class RouteSearch extends Component{
                         views: parseInt(snapshot.child("views").val()) + 1
                     })
                 }
-                this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, final_start: this.state.start, final_end: this.state.end, directions: directions});
+                this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, final_start: start, final_end: end, directions: directions});
             })
         }
-        backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
+        backend.getRoute(start, end, this.state.waypoints, callback);
     }
 
     handleClick() {
@@ -284,15 +333,19 @@ class RouteSearch extends Component{
         if(!this.state.playing){
             this.interval = setInterval(() => this.incRoute(), this.state.speed);
             this.setState({playing: true});
+            this.setState({videoStatus: " fa-stop"})
         }
         else{
             clearInterval(this.interval);
             this.setState({playing: false});
+            this.setState({videoStatus: " fa-play"})
+
         }
     }
 
     updateSpeed(delta){
         if(!this.state.playing){
+            console.log(delta);
             this.setState({speed: Math.max(10, this.state.speed + delta)});
         }
         else{
@@ -304,7 +357,12 @@ class RouteSearch extends Component{
 
     handleKeyPress = (event) => {
         if(document.activeElement.tagName === "INPUT") return;
-        switch(event.key){
+        this.changeVideo(event.key)
+
+    }
+
+    changeVideo(option){
+        switch(option){
             case " ":
                 event.preventDefault();
                 return this.playRoute();
@@ -319,17 +377,19 @@ class RouteSearch extends Component{
             case "ArrowUp":
                 event.preventDefault();
                 this.updateSpeed(-10);
+                this.setState({currentRate: this.state.currentRate + .1})
                 return;
             case "ArrowDown":
                 event.preventDefault();
                 this.updateSpeed(10);
+                this.setState({currentRate: this.state.currentRate + .1})
+
                 return;
 
             default:
                 return;
         }
     }
-
     /*Probably gonna have to find a better way to store the routes in the database
       as of right now, its just gonna be a string thats
       "start-waypoints-end"*/
@@ -347,6 +407,13 @@ class RouteSearch extends Component{
         var uid = window.firebase.auth().currentUser.uid;
         var routeid = this.getRouteId();
         window.firebase.database().ref("users/"+uid+"/routes/"+routeid+"/").update({saved: true});
+    }
+
+    resetRoute(){
+        clearInterval(this.interval);
+        this.setState({playing: false});
+        this.setState({index: 0})
+        this.setState({videoStatus: " fa-play"});
     }
 }
 
