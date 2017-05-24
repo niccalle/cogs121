@@ -7,6 +7,7 @@ import { FormGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+import Geosuggest from 'react-geosuggest';
 
 
 class Search extends Component{
@@ -26,7 +27,7 @@ class Search extends Component{
                             <FormControl type="text"
                                 className="search-box-input"
                                 placeholder="Start"
-                                id="start" 
+                                id="start"
                                 onChange={this.props.handleChange}/>
                         </Col>
                     </Row>
@@ -34,6 +35,11 @@ class Search extends Component{
                     <Row>
                         <Col md={12}>
                             <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={this.props.handleChange}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                            <Geosuggest />
                         </Col>
                     </Row>
 

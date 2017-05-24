@@ -64,7 +64,7 @@ class Backend {
             origin: origin,
             destination: destination,
             waypoints: wp,
-            travelMode: window.google.maps.TravelMode.DRIVING,
+            travelMode: window.google.maps.TravelMode.BICYCLING,
         }, (body, status) => {
             if (status === window.google.maps.DirectionsStatus.OK) {
                 var directions = [];
