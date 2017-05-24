@@ -17,3 +17,4 @@ Nic worked on autocomplete functionality for inputting source and destinations. 
 
 SCREENSHOT OF THE APP
 http://imgur.com/Fhp0swU
+http://imgur.com/cXnFoyV
