@@ -12,7 +12,11 @@ import Geosuggest from 'react-geosuggest';
 
 class Search extends Component{
     state = {
-        waypoints: 0
+        waypoints: 0,
+        start: "",
+        end: "",
+        startSelected: false,
+        endSelected: false
     }
     render() {
         var along = [];
@@ -22,24 +26,42 @@ class Search extends Component{
         return (
             <Form>
                 <FormGroup>
+                    {
+                //     <Row>
+                //         <Col md={12}>
+                //             <FormControl type="text"
+                //                 className="search-box-input"
+                //                 placeholder="Start"
+                //                 id="start"
+                //                 onChange={this.props.handleChange}/>
+                //         </Col>
+                //     </Row>
+                //     {along}
+                //     <Row>
+                //         <Col md={12}>
+                //             <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={this.props.handleChange}/>
+                //         </Col>
+                //     </Row>
+                }
                     <Row>
                         <Col md={12}>
-                            <FormControl type="text"
-                                className="search-box-input"
+                            <Geosuggest
+                                ref={el=>this._geoSuggest=el}
                                 placeholder="Start"
-                                id="start"
-                                onChange={this.props.handleChange}/>
-                        </Col>
-                    </Row>
-                    {along}
-                    <Row>
-                        <Col md={12}>
-                            <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={this.props.handleChange}/>
+                                inputClassName="start-input"
+                                style={{'input': {'border-color': this.state.startSelected? 'palegreen' : ""}}}
+                                onSuggestSelect={(e) => this.updateStart(e)}
+                                />
                         </Col>
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Geosuggest />
+                            <Geosuggest
+                                placeholder="End"
+                                initialValue={this.props.initialStart}
+                                inputClassName="end-input"
+                                style={{'input': {'border-color': this.state.startSelected? 'palegreen' : ""}}}
+                                onSuggestSelect={(e) => this.updateEnd(e)}/>
                         </Col>
                     </Row>
 
@@ -50,9 +72,14 @@ class Search extends Component{
                             </Button>
                         </Col>
                         <Col md={8}>
-                            <Button bsStyle="success" className="search-box-input" onClick={this.props.handleClick} block>
-                                Preview Route!
-                            </Button>
+                            {
+                                this.state.startSelected && this.state.endSelected &&(
+                                    <Button bsStyle="success" className="search-box-input" onClick={() => this.props.handleClick(this.state.start, this.state.end)} block>
+                                        Preview Route!
+                                    </Button>
+                                )
+                            }
+
                         </Col>
                     </Row>
 
@@ -60,7 +87,13 @@ class Search extends Component{
             </Form>
         )
     }
+    updateStart(e){
+        this.setState({start: e.label, startSelected: true});
+    }
 
+    updateEnd(e){
+        this.setState({end: e.label, endSelected: true});
+    }
     addWayPoint() {
         this.setState({waypoints: this.state.waypoints + 1});
     }

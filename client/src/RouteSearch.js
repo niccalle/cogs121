@@ -119,7 +119,7 @@ class RouteSearch extends Component{
                         </Row>
                         <Row>
                             <div className="start-end">
-                                <Search handleChange={(e) => this.handleChange(e)} handleClick={(e) => this.handleSubmit(e)}/>
+                                <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
                                 <Button bsStyle="success" onClick={()=> this.saveRoute()} block>
                                     Save Route!
                                 </Button>
@@ -218,8 +218,7 @@ class RouteSearch extends Component{
     /*
     * Makes an API request when submit is clicked
     */
-    handleSubmit( event ) {
-        event.preventDefault();
+    handleSubmit( start, end ) {
 
         //Callback to update the UI once our API call has finished.
         var callback = (res, directions) => {
@@ -228,8 +227,8 @@ class RouteSearch extends Component{
                 //If this is the first time someone has viewed the route
                 if(!snapshot.val()){
                     window.firebase.database().ref('routes/'+routeId).set({
-                        start: this.state.start,
-                        end: this.state.end,
+                        start: start,
+                        end: end,
                         image: res[0][0],
                         views: 1
                     })
@@ -239,10 +238,10 @@ class RouteSearch extends Component{
                         views: parseInt(snapshot.child("views").val()) + 1
                     })
                 }
-                this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, final_start: this.state.start, final_end: this.state.end, directions: directions});
+                this.setState({images: res[0], coords: res[1], final_way: this.state.waypoints, final_start: start, final_end: end, directions: directions});
             })
         }
-        backend.getRoute(this.state.start, this.state.end, this.state.waypoints, callback);
+        backend.getRoute(start, end, this.state.waypoints, callback);
     }
 
     handleClick() {
