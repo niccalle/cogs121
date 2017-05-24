@@ -150,7 +150,6 @@ class RouteSearch extends Component{
                     && this.state.final_end != ""
                     && (
                     <Col md={9}>
-
                         <div className="route-gif">
                             <a href="#" className="playWrapper">
                                 <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
@@ -161,6 +160,17 @@ class RouteSearch extends Component{
                         </div>
                         <Row>
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
+                            <Button bsStyle="warning" 
+
+                                    style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
+                                    onClick={()=> this.changeVideo("ArrowUp")} block >
+                                    Speed Increase
+                            </Button>
+                            <Button bsStyle="warning" 
+                                    style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
+                                    onClick={()=> this.changeVideo("ArrowDown")} block>
+                                    Speed Decrease
+                            </Button>
                         </Row>
                     </Col>
                     )}
@@ -304,7 +314,12 @@ class RouteSearch extends Component{
 
     handleKeyPress = (event) => {
         if(document.activeElement.tagName === "INPUT") return;
-        switch(event.key){
+        this.changeVideo(event.key)
+
+    }
+
+    changeVideo(option){
+        switch(option){
             case " ":
                 event.preventDefault();
                 return this.playRoute();
@@ -329,7 +344,6 @@ class RouteSearch extends Component{
                 return;
         }
     }
-
     /*Probably gonna have to find a better way to store the routes in the database
       as of right now, its just gonna be a string thats
       "start-waypoints-end"*/
