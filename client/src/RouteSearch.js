@@ -20,22 +20,6 @@ class RouteImg extends Component{
     }
 }
 
-class MapPlace extends Component {
-  static propTypes = {
-    text: PropTypes.string
-  };
-
-  static defaultProps = {};
-
-  render() {
-    return (
-       <div style={this.props.style}>
-          {this.props.text}
-       </div>
-    );
-  }
-}
-
 class RouteSearch extends Component{
     static propTypes = {
         center: PropTypes.array,
@@ -97,11 +81,6 @@ class RouteSearch extends Component{
             imgs.push(this.renderImage(i));
         }
 
-        var places = [];
-        for(var i in this.state.coords){
-            places.push(this.renderPlace(i));
-        }
-
         var style = {
             "display": this.state.playing ? "none" : "inline"
         }
@@ -145,7 +124,7 @@ class RouteSearch extends Component{
                     this.state.final_start != ""
                     && this.state.final_end != ""
                     && (
-                    <Col md={6}>
+                    <Col md={9}>
                         <div className="route-gif">
                             <a href="#" className="playWrapper">
                                 <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
@@ -155,65 +134,72 @@ class RouteSearch extends Component{
                             </ul>
                         </div>
                         <Row>
-                            <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
+                            <div className="button-row">
+                                <Button
+                                        style = {{padding:"7px", width: "15%", margin: "auto", display: "inline"}}
+                                        onClick={() => this.playRoute()} block>
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name={this.state.videoStatus}
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                </Button>
+                                <Button
+                                        style = {{padding:"7px", width: "15%", margin: "auto", display: "inline"}}
+                                        onClick={() => this.changeVideo("ArrowLeft")} block>
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-step-backward"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                </Button>
+                                <Button
+                                        style = {{padding:"7px", width: "15%", margin: "auto", display: "inline"}}
+                                        onClick={() => this.changeVideo("ArrowRight")} block>
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-step-forward"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                </Button>
 
-
-                            <Button
-                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
-                                    onClick={() => this.playRoute()} block>
-                                    <FontAwesome
-                                        className='super-crazy-colors'
-                                        name={this.state.videoStatus}
-                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
-                            </Button>
-                            <Button
-                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
-                                    onClick={() => this.changeVideo("ArrowLeft")} block>
-                                    <FontAwesome
-                                        className='super-crazy-colors'
-                                        name=" fa-step-backward"
-                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
-                            </Button>
-                            <Button
-                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
-                                    onClick={() => this.changeVideo("ArrowRight")} block>
-                                    <FontAwesome
-                                        className='super-crazy-colors'
-                                        name=" fa-step-forward"
-                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
-                            </Button>
-
-                            <Button bsStyle="danger"
-                                    style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
-                                    onClick={()=> this.resetRoute()} block>
-                                    <FontAwesome
-                                        className='super-crazy-colors'
-                                        name=" fa-fast-backward"
-                                        style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
-                            </Button>
-                        </Row>
-                        <Row>
-                            <Button bsStyle="warning"
-                                    style = {{padding:"7px", width: "10%", margin: "auto", display: "inline"}}
-                                    onClick={()=> this.changeVideo("ArrowUp")} block >
-                                    Speed Increase
-                            </Button>
-                            <Button bsStyle="warning"
-                                    style = {{padding:"7px", width: "10%", margin: "auto", display: "inline"}}
-                                    onClick={()=> this.changeVideo("ArrowDown")} block>
-                                    Speed Decrease
-                            </Button>
+                                <Button bsStyle="danger"
+                                        style = {{padding:"7px", width: "15%", margin: "auto", display: "inline"}}
+                                        onClick={()=> this.resetRoute()} block>
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-fast-backward"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                </Button>
+                                <Button bsStyle="warning"
+                                        style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
+                                        onClick={()=> this.changeVideo("ArrowUp")} block >
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-angle-double-up"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                         Speed
+                                </Button>
+                                <Button bsStyle="warning"
+                                        style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
+                                        onClick={()=> this.changeVideo("ArrowDown")} block>
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-angle-double-down"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                         Speed
+                                </Button>
+                            </div>
                         </Row>
                     </Col>
                     )}
-                    <Col md={3}>
-                              <h3 className="directions-heading"> Directions </h3>
-                          <div className="directions">
-                              <ul className="directions-list">
-                                  {directions}
-                              </ul>
-                          </div>
-                    </Col>
+                    {
+                    //     <Col md={3}>
+                    //           <h3 className="directions-heading"> Directions </h3>
+                    //       <div className="directions">
+                    //           <ul className="directions-list">
+                    //               {directions}
+                    //           </ul>
+                    //       </div>
+                    // </Col>
+                    }
                 </Row>
             </div>
         )
@@ -309,20 +295,6 @@ class RouteSearch extends Component{
         return <RouteImg key={i} src={this.state.images[i]} style={style} handleClick={() => this.handleClick()}/>;
     }
 
-    renderPlace(i) {
-        var currlat = 0;
-        var currlong = 0;
-
-        var style = {
-            "display": i == this.state.index ? "inline" : "none"
-        }
-
-        if(this.state.coords[i]){
-          currlat = this.state.coords[i][0];
-          currlong = this.state.coords[i][1];
-        }
-        return <MapPlace lat={currlat} lng={currlong} style={style} text={'YOU ARE HERE'} /* Kreyser Avrora */ />
-    }
 
     getImages(){
         var res = backend.bikeRoute();

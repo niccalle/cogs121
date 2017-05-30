@@ -34,11 +34,14 @@ a.playWrapper {
 }
 
 img.route-img {
-    width: 600px;
+    width: 100%;
 }
 
 ul {
     padding-left: 0px;
+}
+.button-row{
+    padding: 0px 15px;
 }
 
 .search-box-input{
