@@ -108,7 +108,7 @@ class TopRoutes extends Component{
                           <h2 ref="subtitle">Create A Route
                             <Button
                               bsStyle="danger"
-                              style={{padding:"3px", float:"right"}}
+                              style={{padding:"8px", float:"right"}}
                               onClick={() => this.closeModal()}>
                                 Close
                               </Button>
@@ -129,8 +129,8 @@ class TopRoutes extends Component{
 
                             <Button
                               bsStyle="primary"
-                              style={{padding:"7px", float:"right"}}
-                              onClick={() => this.goToCustomRoute()}>Submit!
+                              style={{padding:"10px", float:"right"}}
+                              onClick={() => this.goToCustomRoute()}>View Video!
                               </Button>
 
 

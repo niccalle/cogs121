@@ -96,7 +96,7 @@ class App extends Component {
                             </Link>
                         </div>
                         <div className="middle-align">
-                            <h2 className="title">Routep.Review</h2>
+                            <h2 className="title">RouteP.review</h2>
                         </div>
                         <div className="navigation-container">
                             <nav>
