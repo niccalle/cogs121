@@ -80,7 +80,9 @@ class App extends Component {
                         <div className="logo-container">
                             <img src={logo} className="App-logo" alt="logo" />
                         </div>
-                        <div className="middle-align"></div>
+                        <div className="middle-align">
+                            <h2 className="title">Routep.Review</h2>
+                        </div>
                         <div className="navigation-container">
                             <nav>
                                 <ul className="account-settings">
