@@ -96,6 +96,7 @@ class RouteSearch extends Component{
             <div className="container-fluid">
                 <Row>
                     <Col md={3}>
+                        <h2>{this.state.start.split(",")[0]} to {this.state.end.split(",")[0]}</h2>
                         <Row>
                             <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
                                 <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>

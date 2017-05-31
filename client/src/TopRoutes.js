@@ -200,7 +200,7 @@ class TopRoutes extends Component{
                     <Link to={'/route/'+route.routeId}>
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
-                        <h4 className="card-title">{route.start} to {route.end} </h4>
+                        <h4 className="card-title">{route.start.split(",")[0]} to {route.end.split(",")[0]} </h4>
                         <p className="card-text">Views: {route.views}</p>
                         {route.rating > 0 &&
                         (<p className="card-text">Ratings: {route.rating}/5</p>)}

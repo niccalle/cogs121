@@ -34,6 +34,10 @@ class App extends Component {
         this.provider.addScope('https://www.googleapis.com/auth/plus.login');
     }
 
+    componentDidUpdate(){
+
+    }
+
     onSignIn(google_user){
         console.log("SIGNED IN");
         console.log(google_user);
@@ -68,16 +72,17 @@ class App extends Component {
     }
 
     handleLogout(){
+        window.firebase.auth().signOut();
         this.setState({authenticated: false, user: null, accessToken: null});
 
     }
 
     render() {
-        // const childrenWithProps = React.Children.map(this.props.children,
-        //  (child) => React.cloneElement(child, {
-        //    authenticated: this.state.authenticated
-        //  })
-        // );
+        if(!this.state.authenticated){
+            var user = window.firebase.auth().currentUser;
+            if(user)
+                this.setState({authenticated: true, user: user});
+        }
 
         return (
             <div>
