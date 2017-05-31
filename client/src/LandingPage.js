@@ -10,7 +10,7 @@ class LandingPage extends Component{
 
             <div className="background">
                 <div className="landing-title">
-                    <h1>Routep.Review</h1>
+                    <h1>RouteP.review</h1>
                 </div>
 
                 <Link to={'/toproutes'}>
