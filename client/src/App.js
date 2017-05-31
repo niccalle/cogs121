@@ -105,7 +105,7 @@ class App extends Component {
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <Link to={'/saved'}> My Routes </Link>
+                                            <Link to={'/saved'}> <span style={{color: "white"}}>My Routes</span> </Link>
                                         </div>
                                     </li>
                                     </div>
@@ -117,7 +117,7 @@ class App extends Component {
                                                 <a className="a-settings">Login</a>
                                             </div>
                                             <div className="div-settings">
-                                               
+
                                             </div>
                                         </li>)
                                     }

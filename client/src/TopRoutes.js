@@ -47,7 +47,8 @@ class TopRoutes extends Component{
                 var end = childSnapshot.child("end").val();
                 var views = childSnapshot.child("views").val();
                 var image = childSnapshot.child("image").val();
-                routes.push({routeId: childSnapshot.key, start: start, image: image, end: end, views: views});
+                var rating = childSnapshot.child("rating").val() ? childSnapshot.child("rating").val() : 0;
+                routes.push({routeId: childSnapshot.key, start: start, image: image, end: end, views: views, rating: rating});
             });
             this.setState({routes: routes});
         })
@@ -201,6 +202,8 @@ class TopRoutes extends Component{
                     <div className="card-block">
                         <h4 className="card-title">{route.start} to {route.end} </h4>
                         <p className="card-text">Views: {route.views}</p>
+                        {route.rating > 0 &&
+                        (<p className="card-text">Ratings: {route.rating}/5</p>)}
                     </div>
                     </Link>
                 </div>

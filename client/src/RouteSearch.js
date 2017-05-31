@@ -228,6 +228,12 @@ class RouteSearch extends Component{
      * Handles when someone clicks on the stars
      */
     onStarClick(nextValue, prevValue, name) {
+        var routeId = this.props.match.params.routeid;
+        if(routeId != ""){
+            window.firebase.database().ref('routes/'+routeId).update({
+                rating: nextValue
+            })
+        }
         this.setState ({rating: nextValue});
     }
 
@@ -285,7 +291,8 @@ class RouteSearch extends Component{
                         start: start,
                         end: end,
                         image: res[0][0],
-                        views: 1
+                        views: 1,
+                        ratings: 2.5
                     })
                 }
                 else{
