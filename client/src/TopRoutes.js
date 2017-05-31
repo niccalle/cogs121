@@ -103,15 +103,16 @@ class TopRoutes extends Component{
                     contentLabel="Example Modal"
                     >
                     <div className="container">
-                        <Row>
+                        <div stlye={{padding: "5px"}}>
                           <h2 ref="subtitle">Create A Route
-                            <button
-                              style={{padding:"7px", float:"right"}}
+                            <Button
+                              bsStyle="danger"
+                              style={{padding:"3px", float:"right"}}
                               onClick={() => this.closeModal()}>
-                                x
-                              </button>
+                                Close
+                              </Button>
                           </h2>
-                        </Row>
+                        </div>
                         <Row>
                             <Col md={6}>
                                 <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
@@ -125,10 +126,11 @@ class TopRoutes extends Component{
                         </Row>
 
 
-                            <button
+                            <Button
+                              bsStyle="primary"
                               style={{padding:"7px", float:"right"}}
                               onClick={() => this.goToCustomRoute()}>Submit!
-                              </button>
+                              </Button>
 
 
                     </div>
@@ -183,7 +185,11 @@ class TopRoutes extends Component{
         backend.getRoute(this.state.start, this.state.end, [], callback);
 
         // I can't get firebase to cooperate if window changes to newly added place for some reason
-        // window.location = '/route/'+this.state.start+'-'+this.state.end;
+
+        this.timeoutHandle = setTimeout(()=>{
+              // Add your logic for the transition
+              window.location = '/route/'+this.state.start+'-'+this.state.end;
+         }, 2000);
     }
 
     createRouteCard(route){

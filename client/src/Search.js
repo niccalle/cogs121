@@ -67,13 +67,14 @@ class Search extends Component{
                         </Col>
                     </Row>
 
-                    <Row>
-                        <Col md={4}>
-                            <Button bsStyle="warning" className="search-box-input" onClick={() => this.addWayPoint()} block>
-                                +
-                            </Button>
-                        </Col>
-                        <Col md={8}>
+                    <Row>{
+                        // <Col md={4}>
+                        //     <Button bsStyle="warning" className="search-box-input" onClick={() => this.addWayPoint()} block>
+                        //         +
+                        //     </Button>
+                        // </Col>
+                      }
+                        <Col md={12}>
                             {
                                 this.state.startSelected && this.state.endSelected &&(
                                     <Button bsStyle="success" className="search-box-input" onClick={() => this.props.handleClick(this.state.start, this.state.end)} block>
