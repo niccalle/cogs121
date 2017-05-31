@@ -122,7 +122,10 @@ class TopRoutes extends Component{
                             </Col>
 
                             <Col md={6}>
-                              <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
+                              <Search
+                                  updateStart={(start) => {this.setState({start: start})}}
+                                  updateEnd={(end) => {this.setState({end: end})}}
+                                  handleClick={(st, end) => this.handleSubmit(st, end)}/>
                             </Col>
                         </Row>
 
@@ -201,9 +204,9 @@ class TopRoutes extends Component{
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
                         <h4 className="card-title">{route.start.split(",")[0]} to {route.end.split(",")[0]} </h4>
-                        <p className="card-text">Views: {route.views}</p>
-                        {route.rating > 0 &&
-                        (<p className="card-text">Ratings: {route.rating}/5</p>)}
+                        <p className="card-text">Views: {route.views}      {route.rating > 0 &&
+                        (<span>Ratings: {route.rating}/5</span>)}</p>
+
                     </div>
                     </Link>
                 </div>
