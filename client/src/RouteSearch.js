@@ -97,13 +97,13 @@ class RouteSearch extends Component{
                 <Row>
                     <Col md={3}>
                         <Row>
-                            <div style={{padding:"7px", width: "100%", height: "340px", margin: "auto"}}>
+                            <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
                                 <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
                             </div>
                         </Row>
                         <Row>
                             <div className="start-end">
-                                <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
+                                {/*<Search handleClick={(st, end) => this.handleSubmit(st, end)}/>*/}
                                 <Button bsStyle="success" onClick={()=> this.saveRoute()} block>
                                     Save Route!
                                 </Button>
