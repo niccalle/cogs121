@@ -13,6 +13,8 @@ import { FormControl } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 import { DropdownButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
+import DirectionsExample from "./DirectionsExample";
+import Search from './Search';
 import Backend from "./backend.js";
 var backend = new Backend();
 
@@ -31,9 +33,11 @@ const customStyles = {
 class TopRoutes extends Component{
     state = {
         routes: [],
+        coords: [],
+        waypoints: [],
         showModal: false,
-        start: "",
-        end: ""
+        start: '',
+        end: ''
     }
     componentDidMount(){
         var routes = []
@@ -48,7 +52,26 @@ class TopRoutes extends Component{
             this.setState({routes: routes});
         })
     }
+
+
     render() {
+
+        var start = []
+        var end = []
+        var waypoints = []
+
+        if(this.state.coords.length == 0){
+          start = [41.8507300, -87.6512600]
+          end = [41.8525800, -87.6514100]
+          waypoints = []
+        }
+        else {
+          start = this.state.coords[0];
+          end = this.state.coords[this.state.coords.length-3];
+          waypoints = this.state.waypoints;
+        }
+
+
         console.log(this.state.routes);
         var cards = [];
         for(var i in this.state.routes){
@@ -64,7 +87,7 @@ class TopRoutes extends Component{
                                 <FormControl type="text"
                                     className="box-input"
                                     placeholder="Search for a route..."
-                                    id="topRoutes_search" 
+                                    id="topRoutes_search"
                                     onChange={this.props.handleChange}/>
                             </FormGroup>
                         </Form>
@@ -101,24 +124,34 @@ class TopRoutes extends Component{
                     contentLabel="Example Modal"
                     >
                     <div className="container">
-                        <h2 ref="subtitle">Create A Route</h2>
-                        <button onClick={() => this.closeModal()}>close</button>
                         <Row>
-                            <Col md={4}>
-                                <FormControl type="text"
-                                    className="search-box-input"
-                                    placeholder="Start"
-                                    id="start"
-                                    onChange={(e) => this.handleChange(e)}
-                                    />
+                          <h2 ref="subtitle">Create A Route
+                            <button
+                              style={{padding:"7px", float:"right"}}
+                              onClick={() => this.closeModal()}>
+                                x
+                              </button>
+                          </h2>
+                        </Row>
+                        <Row>
+                            <Col md={6}>
+                                <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
+                                    <DirectionsExample start={start} end={end} waypoints={[]} curr={start} index={0}/>
+                                </div>
                             </Col>
-                            <Col md={4}>
-                                <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={(e) => this.handleChange(e)}/>
-                            </Col>
-                            <Col md={4}>
-                                <button onClick={() => this.goToCustomRoute()}>Go to Route!</button>
+
+                            <Col md={6}>
+                              <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
                             </Col>
                         </Row>
+
+
+                            <button
+                              style={{padding:"7px", float:"right"}}
+                              onClick={() => this.goToCustomRoute()}>Submit!
+                              </button>
+
+
                     </div>
                 </Modal>
             </div>
@@ -131,6 +164,20 @@ class TopRoutes extends Component{
         //If it's not a waypoint
         if(name === "start" || name === "end")
             this.setState( {[event.target.id]: event.target.value});
+    }
+
+    handleSubmit( start, end ){
+      var callback = (res, directions) => {
+        this.setState({
+          coords: res[1],
+          start: start,
+          end: end,
+
+        });
+      }
+
+      backend.getRoute(start, end, [], callback);
+
     }
 
     goToCustomRoute(){
@@ -155,13 +202,16 @@ class TopRoutes extends Component{
             })
         }
         backend.getRoute(this.state.start, this.state.end, [], callback);
+
+        // I can't get firebase to cooperate if window changes to newly added place for some reason
+        // window.location = '/route/'+this.state.start+'-'+this.state.end;
     }
 
     createRouteCard(route){
         return (
             <Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
-                    <Link to={'/route/'+route.routeId}> 
+                    <Link to={'/route/'+route.routeId}>
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
                         <h4 className="card-title">{route.start} to {route.end} </h4>

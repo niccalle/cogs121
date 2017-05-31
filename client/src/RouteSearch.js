@@ -157,7 +157,6 @@ class RouteSearch extends Component{
                         <Row>
                             <p className="text-center">Use the Arrow Keys to change speed and step frames. Press Space to toggle video</p>
 
-
                             <Button
                                     style = {{padding:"7px", width: "7.5%", margin: "auto", display: "inline"}}
                                     onClick={() => this.playRoute()} block>
