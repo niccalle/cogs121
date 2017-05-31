@@ -5,6 +5,8 @@ import logo from './logo.svg';
 import { Link } from "react-router-dom";
 import './App.css';
 import Cookies from 'universal-cookie';
+import { browserHistory } from 'react-router'
+
 
 const cookie = new Cookies();
 
@@ -27,6 +29,7 @@ class App extends Component {
         //     'longtitle': true,
         //     'onsuccess': (g) => this.onSignIn(g)
         //   });
+
         this.provider = new window.firebase.auth.GoogleAuthProvider();
         this.provider.addScope('https://www.googleapis.com/auth/plus.login');
     }
@@ -82,8 +85,10 @@ class App extends Component {
                 <div className="App">
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
                     <div className="App-header">
-                        <div className="logo-container">
-                            <img src={logo} className="App-logo" alt="logo" />
+                        <div className="logo" style={{}}>
+                            <Link to={'/toproutes'}>
+                                <img src="/logo.png" style={{height:"80px", width: "80px"}}/>
+                            </Link>
                         </div>
                         <div className="middle-align">
                             <h2 className="title">Routep.Review</h2>
@@ -110,6 +115,9 @@ class App extends Component {
                                         <li className="li-settings">
                                             <div className="div-settings" onClick={()=>this.handleLogin()}>
                                                 <a className="a-settings">Login</a>
+                                            </div>
+                                            <div className="div-settings">
+                                               
                                             </div>
                                         </li>)
                                     }
