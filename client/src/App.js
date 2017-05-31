@@ -64,6 +64,11 @@ class App extends Component {
         });
     }
 
+    handleLogout(){
+        this.setState({authenticated: false, user: null, accessToken: null});
+
+    }
+
     render() {
         // const childrenWithProps = React.Children.map(this.props.children,
         //  (child) => React.cloneElement(child, {
@@ -89,23 +94,13 @@ class App extends Component {
                                     { this.state.authenticated && (
                                     <div>
                                     <li className="li-settings">
-                                        <div className="div-settings" onClick={()=>this.handleLogin()}>
-                                            <a className="a-settings">LOGOUT</a>
+                                        <div className="div-settings" onClick={()=>this.handleLogout()}>
+                                            <a className="a-settings">Logout</a>
                                         </div>
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings">My Account</a>
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
-                                            <Link to={'/saved'}> TESTING </Link>
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
-                                            <a className="a-settings">Settings</a>
+                                            <Link to={'/saved'}> My Routes </Link>
                                         </div>
                                     </li>
                                     </div>
@@ -114,7 +109,7 @@ class App extends Component {
                                         !this.state.authenticated && (
                                         <li className="li-settings">
                                             <div className="div-settings" onClick={()=>this.handleLogin()}>
-                                                <a className="a-settings">LOGIN</a>
+                                                <a className="a-settings">Login</a>
                                             </div>
                                         </li>)
                                     }
