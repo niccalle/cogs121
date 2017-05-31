@@ -85,7 +85,7 @@ class TopRoutes extends Component{
                                     <span className="glyphicon glyphicon-plus" onClick={() => this.createCustomRoute()} ></span>
                                 </div>
                                 <h4 className="card-title">CREATE YOUR OWN</h4>
-                                <p className="card-text">custom route</p>
+                                <h4 className="card-title">CUSTOM ROUTE</h4>
                             </div>
                         </div>
                     </Col>

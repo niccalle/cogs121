@@ -4,6 +4,7 @@ import App from './App';
 import TopRoutes from "./TopRoutes";
 import RouteSearch from "./RouteSearch";
 import SavedRoutes from "./SavedRoutes";
+import LandingPage from "./LandingPage";
 import './index.css';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
