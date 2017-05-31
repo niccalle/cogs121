@@ -1,3 +1,59 @@
+body, html{
+    height: 100%;
+    margin: 0;
+}
+
 .background{
-    background-color: red;
+    background-image: url("http://wallpapercave.com/wp/geo0Fqb.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 100;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.landing-title{
+    padding-top: 50px;
+    color: white;
+    font-family: 'Shadows Into Light', cursive;
+    text-align: center;
+    font-size: 80px;
+}
+
+.tagline{
+    font-family: 'Shadows Into Light', cursive;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 20px;
+}
+
+.description{
+    color: white;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 120px;
+}
+
+.top-routes{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    padding-top: 20px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+h2 span{
+    padding: 18px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+}
+
+span:hover {
+    color: white;
+    textDecoration: none;
+    background-color: #86B3C4; 
 }

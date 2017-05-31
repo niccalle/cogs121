@@ -1,4 +1,4 @@
-import React, {Component, PropTypes } from 'react';
+/*import React, {Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
 
@@ -61,4 +61,4 @@ const App = React.createClass({
 
 });
 
-ReactDOM.render(<App />, document.getElementById('gmaps'));
+ReactDOM.render(<App />, document.getElementById('gmaps'));*/
