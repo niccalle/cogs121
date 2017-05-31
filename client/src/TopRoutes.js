@@ -80,35 +80,14 @@ class TopRoutes extends Component{
         return(
             <div>
                 <div className="container-flex row gutter-0">
-                    <Row>
-                        <Col lgOffset={3} lg={6}>
-                        <Form>
-                            <FormGroup>
-                                <FormControl type="text"
-                                    className="box-input"
-                                    placeholder="Search for a route..."
-                                    id="topRoutes_search"
-                                    onChange={this.props.handleChange}/>
-                            </FormGroup>
-                        </Form>
-                        </Col>
-
-                        <Col md={2}>
-                            <DropdownButton title="Sort by">
-                                <MenuItem eventKey="1">Action</MenuItem>
-                                <MenuItem eventKey="2">Action2</MenuItem>
-                            </DropdownButton>
-                        </Col>
-                    </Row>
-
                     <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
                             <div className="card-block">
                                 <div className="create-plus">
                                     <span className="glyphicon glyphicon-plus" onClick={() => this.createCustomRoute()} ></span>
                                 </div>
-                                <h4 className="card-title">CREATE YOUR OWN</h4>
-                                <h4 className="card-title">CUSTOM ROUTE</h4>
+                                <h4 className="card-title">Create your Own</h4>
+                                <h4 className="card-title">Custom Route</h4>
                             </div>
                         </div>
                     </Col>
