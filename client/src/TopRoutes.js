@@ -122,7 +122,10 @@ class TopRoutes extends Component{
                             </Col>
 
                             <Col md={6}>
-                              <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
+                              <Search
+                                  updateStart={(start) => {this.setState({start: start})}}
+                                  updateEnd={(end) => {this.setState({end: end})}}
+                                  handleClick={(st, end) => this.handleSubmit(st, end)}/>
                             </Col>
                         </Row>
 
