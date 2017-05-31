@@ -5,6 +5,8 @@ import logo from './logo.svg';
 import { Link } from "react-router-dom";
 import './App.css';
 import Cookies from 'universal-cookie';
+import { browserHistory } from 'react-router'
+
 
 const cookie = new Cookies();
 
@@ -27,8 +29,13 @@ class App extends Component {
         //     'longtitle': true,
         //     'onsuccess': (g) => this.onSignIn(g)
         //   });
+
         this.provider = new window.firebase.auth.GoogleAuthProvider();
         this.provider.addScope('https://www.googleapis.com/auth/plus.login');
+    }
+
+    componentDidUpdate(){
+
     }
 
     onSignIn(google_user){
@@ -64,12 +71,18 @@ class App extends Component {
         });
     }
 
+    handleLogout(){
+        window.firebase.auth().signOut();
+        this.setState({authenticated: false, user: null, accessToken: null});
+
+    }
+
     render() {
-        // const childrenWithProps = React.Children.map(this.props.children,
-        //  (child) => React.cloneElement(child, {
-        //    authenticated: this.state.authenticated
-        //  })
-        // );
+        if(!this.state.authenticated){
+            var user = window.firebase.auth().currentUser;
+            if(user)
+                this.setState({authenticated: true, user: user});
+        }
 
         return (
             <div>
@@ -77,8 +90,10 @@ class App extends Component {
                 <div className="App">
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
                     <div className="App-header">
-                        <div className="logo-container">
-                            <img src={logo} className="App-logo" alt="logo" />
+                        <div className="logo" style={{}}>
+                            <Link to={'/toproutes'}>
+                                <img src="/logo.png" style={{height:"80px", width: "80px"}}/>
+                            </Link>
                         </div>
                         <div className="middle-align">
                             <h2 className="title">Routep.Review</h2>
@@ -89,23 +104,13 @@ class App extends Component {
                                     { this.state.authenticated && (
                                     <div>
                                     <li className="li-settings">
-                                        <div className="div-settings" onClick={()=>this.handleLogin()}>
-                                            <a className="a-settings">LOGOUT</a>
+                                        <div className="div-settings" onClick={()=>this.handleLogout()}>
+                                            <a className="a-settings">Logout</a>
                                         </div>
                                     </li>
                                     <li className="li-settings">
                                         <div className="div-settings">
-                                            <a className="a-settings">My Account</a>
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
-                                            <Link to={'/saved'}> TESTING </Link>
-                                        </div>
-                                    </li>
-                                    <li className="li-settings">
-                                        <div className="div-settings">
-                                            <a className="a-settings">Settings</a>
+                                            <Link to={'/saved'}> <span style={{color: "white"}}>My Routes</span> </Link>
                                         </div>
                                     </li>
                                     </div>
@@ -114,7 +119,10 @@ class App extends Component {
                                         !this.state.authenticated && (
                                         <li className="li-settings">
                                             <div className="div-settings" onClick={()=>this.handleLogin()}>
-                                                <a className="a-settings">LOGIN</a>
+                                                <a className="a-settings">Login</a>
+                                            </div>
+                                            <div className="div-settings">
+
                                             </div>
                                         </li>)
                                     }

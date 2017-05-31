@@ -13,6 +13,8 @@ import { FormControl } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 import { DropdownButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
+import DirectionsExample from "./DirectionsExample";
+import Search from './Search';
 import Backend from "./backend.js";
 var backend = new Backend();
 
@@ -31,9 +33,11 @@ const customStyles = {
 class TopRoutes extends Component{
     state = {
         routes: [],
+        coords: [],
+        waypoints: [],
         showModal: false,
-        start: "",
-        end: ""
+        start: '',
+        end: ''
     }
     componentDidMount(){
         var routes = []
@@ -43,12 +47,32 @@ class TopRoutes extends Component{
                 var end = childSnapshot.child("end").val();
                 var views = childSnapshot.child("views").val();
                 var image = childSnapshot.child("image").val();
-                routes.push({routeId: childSnapshot.key, start: start, image: image, end: end, views: views});
+                var rating = childSnapshot.child("rating").val() ? childSnapshot.child("rating").val() : 0;
+                routes.push({routeId: childSnapshot.key, start: start, image: image, end: end, views: views, rating: rating});
             });
             this.setState({routes: routes});
         })
     }
+
+
     render() {
+
+        var start = []
+        var end = []
+        var waypoints = []
+
+        if(this.state.coords.length == 0){
+          start = [41.8507300, -87.6512600]
+          end = [41.8525800, -87.6514100]
+          waypoints = []
+        }
+        else {
+          start = this.state.coords[0];
+          end = this.state.coords[this.state.coords.length-3];
+          waypoints = this.state.waypoints;
+        }
+
+
         console.log(this.state.routes);
         var cards = [];
         for(var i in this.state.routes){
@@ -57,35 +81,14 @@ class TopRoutes extends Component{
         return(
             <div>
                 <div className="container-flex row gutter-0">
-                    <Row>
-                        <Col lgOffset={3} lg={6}>
-                        <Form>
-                            <FormGroup>
-                                <FormControl type="text"
-                                    className="box-input"
-                                    placeholder="Search for a route..."
-                                    id="topRoutes_search" 
-                                    onChange={this.props.handleChange}/>
-                            </FormGroup>
-                        </Form>
-                        </Col>
-
-                        <Col md={2}>
-                            <DropdownButton title="Sort by">
-                                <MenuItem eventKey="1">Action</MenuItem>
-                                <MenuItem eventKey="2">Action2</MenuItem>
-                            </DropdownButton>
-                        </Col>
-                    </Row>
-
                     <Col lg={3} Col md={4} Col sm={6}>
                         <div className="card">
                             <div className="card-block">
                                 <div className="create-plus">
                                     <span className="glyphicon glyphicon-plus" onClick={() => this.createCustomRoute()} ></span>
                                 </div>
-                                <h4 className="card-title">CREATE YOUR OWN</h4>
-                                <h4 className="card-title">CUSTOM ROUTE</h4>
+                                <h4 className="card-title">Create your Own</h4>
+                                <h4 className="card-title">Custom Route</h4>
                             </div>
                         </div>
                     </Col>
@@ -101,24 +104,36 @@ class TopRoutes extends Component{
                     contentLabel="Example Modal"
                     >
                     <div className="container">
-                        <h2 ref="subtitle">Create A Route</h2>
-                        <button onClick={() => this.closeModal()}>close</button>
+                        <div stlye={{padding: "5px"}}>
+                          <h2 ref="subtitle">Create A Route
+                            <Button
+                              bsStyle="danger"
+                              style={{padding:"3px", float:"right"}}
+                              onClick={() => this.closeModal()}>
+                                Close
+                              </Button>
+                          </h2>
+                        </div>
                         <Row>
-                            <Col md={4}>
-                                <FormControl type="text"
-                                    className="search-box-input"
-                                    placeholder="Start"
-                                    id="start"
-                                    onChange={(e) => this.handleChange(e)}
-                                    />
+                            <Col md={6}>
+                                <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
+                                    <DirectionsExample start={start} end={end} waypoints={[]} curr={start} index={0}/>
+                                </div>
                             </Col>
-                            <Col md={4}>
-                                <FormControl type="text" className="search-box-input" placeholder="End" id="end" onChange={(e) => this.handleChange(e)}/>
-                            </Col>
-                            <Col md={4}>
-                                <button onClick={() => this.goToCustomRoute()}>Go to Route!</button>
+
+                            <Col md={6}>
+                              <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
                             </Col>
                         </Row>
+
+
+                            <Button
+                              bsStyle="primary"
+                              style={{padding:"7px", float:"right"}}
+                              onClick={() => this.goToCustomRoute()}>Submit!
+                              </Button>
+
+
                     </div>
                 </Modal>
             </div>
@@ -131,6 +146,20 @@ class TopRoutes extends Component{
         //If it's not a waypoint
         if(name === "start" || name === "end")
             this.setState( {[event.target.id]: event.target.value});
+    }
+
+    handleSubmit( start, end ){
+      var callback = (res, directions) => {
+        this.setState({
+          coords: res[1],
+          start: start,
+          end: end,
+
+        });
+      }
+
+      backend.getRoute(start, end, [], callback);
+
     }
 
     goToCustomRoute(){
@@ -155,17 +184,26 @@ class TopRoutes extends Component{
             })
         }
         backend.getRoute(this.state.start, this.state.end, [], callback);
+
+        // I can't get firebase to cooperate if window changes to newly added place for some reason
+
+        this.timeoutHandle = setTimeout(()=>{
+              // Add your logic for the transition
+              window.location = '/route/'+this.state.start+'-'+this.state.end;
+         }, 2000);
     }
 
     createRouteCard(route){
         return (
             <Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
-                    <Link to={'/route/'+route.routeId}> 
+                    <Link to={'/route/'+route.routeId}>
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
                     <div className="card-block">
-                        <h4 className="card-title">{route.start} to {route.end} </h4>
+                        <h4 className="card-title">{route.start.split(",")[0]} to {route.end.split(",")[0]} </h4>
                         <p className="card-text">Views: {route.views}</p>
+                        {route.rating > 0 &&
+                        (<p className="card-text">Ratings: {route.rating}/5</p>)}
                     </div>
                     </Link>
                 </div>

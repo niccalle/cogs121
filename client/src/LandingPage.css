@@ -52,8 +52,7 @@ h2 span{
     border-radius: 20px;
 }
 
-span:hover {
+h2 span:hover {
     color: white;
-    textDecoration: none;
-    background-color: #86B3C4; 
+    background-color: #337AB7;
 }

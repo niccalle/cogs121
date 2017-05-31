@@ -82,7 +82,7 @@ import {withGoogleMap,
                     this.setState({
                         directions: result,
                     });
-                } 
+                }
             });
         }
 

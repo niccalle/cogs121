@@ -96,14 +96,15 @@ class RouteSearch extends Component{
             <div className="container-fluid">
                 <Row>
                     <Col md={3}>
+                        <h2>{this.state.start.split(",")[0]} to {this.state.end.split(",")[0]}</h2>
                         <Row>
-                            <div style={{padding:"7px", width: "100%", height: "340px", margin: "auto"}}>
+                            <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
                                 <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
                             </div>
                         </Row>
                         <Row>
                             <div className="start-end">
-                                <Search handleClick={(st, end) => this.handleSubmit(st, end)}/>
+                                {/*<Search handleClick={(st, end) => this.handleSubmit(st, end)}/>*/}
                                 <Button bsStyle="success" onClick={()=> this.saveRoute()} block>
                                     Save Route!
                                 </Button>
@@ -187,21 +188,21 @@ class RouteSearch extends Component{
                                             name=" fa-fast-backward"
                                             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
                                 </Button>
-                                <Button bsStyle="warning"
-                                        style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
-                                        onClick={()=> this.changeVideo("ArrowUp")} block >
-                                        <FontAwesome
-                                            className='super-crazy-colors'
-                                            name=" fa-angle-double-up"
-                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
-                                         Speed
-                                </Button>
-                                <Button bsStyle="warning"
+                                                               <Button bsStyle="warning"
                                         style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
                                         onClick={()=> this.changeVideo("ArrowDown")} block>
                                         <FontAwesome
                                             className='super-crazy-colors'
                                             name=" fa-angle-double-down"
+                                            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
+                                         Speed
+                                </Button>
+                                 <Button bsStyle="warning"
+                                        style = {{padding:"7px", width: "20%", margin: "auto", display: "inline"}}
+                                        onClick={()=> this.changeVideo("ArrowUp")} block >
+                                        <FontAwesome
+                                            className='super-crazy-colors'
+                                            name=" fa-angle-double-up"
                                             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}/>
                                          Speed
                                 </Button>
@@ -228,6 +229,12 @@ class RouteSearch extends Component{
      * Handles when someone clicks on the stars
      */
     onStarClick(nextValue, prevValue, name) {
+        var routeId = this.props.match.params.routeid;
+        if(routeId != ""){
+            window.firebase.database().ref('routes/'+routeId).update({
+                rating: nextValue
+            })
+        }
         this.setState ({rating: nextValue});
     }
 
@@ -285,7 +292,8 @@ class RouteSearch extends Component{
                         start: start,
                         end: end,
                         image: res[0][0],
-                        views: 1
+                        views: 1,
+                        ratings: 2.5
                     })
                 }
                 else{

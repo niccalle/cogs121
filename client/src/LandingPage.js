@@ -6,7 +6,7 @@ import {View, Image, StyleSheet} from 'react-native';
 class LandingPage extends Component{
 
     render(){
-        
+
         return(
 
             <div className="background"> 
@@ -18,7 +18,7 @@ class LandingPage extends Component{
 
                 <Link to={'/toproutes'} style={{ textDecoration:"none" }}> 
                     <h2 className="top-routes"><span>View Top Routes</span></h2>
-                </Link>
+               </Link>
             </div>
 
         )
