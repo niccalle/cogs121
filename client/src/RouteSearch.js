@@ -50,7 +50,8 @@ class RouteSearch extends Component{
             rating: 0,
             directions: [],
             videoStatus: " fa-play",
-            currentRate: 1.0
+            currentRate: 1.0,
+            num_plays: 0
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -108,16 +109,7 @@ class RouteSearch extends Component{
                                 </Button>
                             </div>
                         </Row>
-                        <Row>
-                            <div className="starRatings">
-                            <StarRatingComponent
-                                name="rate"
-                                starCount={5}
-                                value={rating}
-                                onStarClick={this.onStarClick.bind(this)}
-                            />
-                            </div>
-                        </Row>
+
 
                     </Col>
                     {
@@ -126,6 +118,33 @@ class RouteSearch extends Component{
                     && (
                     <Col md={9}>
                         <div className="route-gif">
+                            {
+                                //Only show the rating after more than one play
+                                this.state.num_plays > 0 &&
+                                this.state.index == 0 &&
+                                !this.state.playing &&
+                                (
+                                    <div id="dark-overlay">
+                                        <Row>
+                                            <div className="starRatings">
+                                                <Row>
+                                                    <h1 style={{color: "white"}}>
+                                                        RATE THIS ROUTE
+                                                    </h1>
+                                                </Row>
+                                                <Row>
+                                                    <StarRatingComponent
+                                                        name="rate"
+                                                        starCount={5}
+                                                        value={rating}
+                                                        onStarClick={this.onStarClick.bind(this)}
+                                                    />
+                                                </Row>
+                                            </div>
+                                        </Row>
+                                    </div>
+                                )
+                            }
                             <a href="#" className="playWrapper">
                                 <span className="playBtn"><img style={style} src="http://wptf.com/wp-content/uploads/2014/05/play-button.png" width="50" height="50" alt=""></img></span>
                             </a>
@@ -285,7 +304,12 @@ class RouteSearch extends Component{
     }
 
     incRoute(){
-        this.setState({index: (this.state.index + 1)%this.state.images.length});
+        if(this.state.index + 1 == this.state.images.length){
+            this.playRoute();
+            this.setState({index: 0, num_plays: this.state.num_plays+1});
+        }
+        else
+            this.setState({index: (this.state.index + 1)%this.state.images.length});
     }
 
     renderImage(i) {
