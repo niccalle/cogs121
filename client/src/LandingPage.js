@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './LandingPage.css';
 
 class LandingPage extends Component{
 
     render(){
-        
+
         return(
 
             <div className="background">
@@ -12,7 +13,7 @@ class LandingPage extends Component{
                     <h1>Routep.Review</h1>
                 </div>
 
-                <Link to={'/toproutes'}> 
+                <Link to={'/toproutes'}>
                     <h2>Top Routes</h2>
                 </Link>
             </div>
