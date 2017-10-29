@@ -1,6 +1,7 @@
 .App-header {
   background: linear-gradient(45deg, rgba(0, 13, 173, 0.72) 20%, rgba(132, 36, 150, 0.72) 90%);
   height: 100px;
+  width: 100%;
   padding: 20px;
   color: white;
   display: table;
