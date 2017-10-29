@@ -37,7 +37,8 @@ class TopRoutes extends Component{
         waypoints: [],
         showModal: false,
         start: '',
-        end: ''
+        end: '',
+        routePreviewed: false
     }
     componentDidMount(){
         var routes = []
@@ -133,7 +134,8 @@ class TopRoutes extends Component{
                             <Button
                               bsStyle="primary"
                               style={{padding:"10px", float:"right"}}
-                              onClick={() => this.goToCustomRoute()}>View Video!
+                              onClick={() => this.goToCustomRoute()}
+                              disabled={!this.state.routePreviewed}>View Video!
                               </Button>
 
 
@@ -157,6 +159,7 @@ class TopRoutes extends Component{
           coords: res[1],
           start: start,
           end: end,
+          routePreviewed: true
 
         });
       }
@@ -197,20 +200,21 @@ class TopRoutes extends Component{
     }
 
     createRouteCard(route){
-        return (
-            <Col lg={3} Col md={4} Col sm={6}>
+        return ( route.rating > 0 &&
+            (<Col lg={3} Col md={4} Col sm={6}>
                 <div className="card">
                     <Link to={'/route/'+route.routeId}>
                     <img className="card-img-top" src={route.image} alt="Card image cap"/>
-                    <div className="card-block">
+                    <div className="card-block" style={{color: "black"}}>
                         <h4 className="card-title">{route.start.split(",")[0]} to {route.end.split(",")[0]} </h4>
-                        <p className="card-text">Views: {route.views}      {route.rating > 0 &&
+                        <p className="card-text" >Views: {route.views}      {route.rating > 0 &&
                         (<span>Ratings: {route.rating}/5</span>)}</p>
 
                     </div>
                     </Link>
                 </div>
-            </Col>
+            </Col>)
+
         )
     }
 

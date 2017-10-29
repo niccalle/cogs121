@@ -51,7 +51,9 @@ class RouteSearch extends Component{
             directions: [],
             videoStatus: " fa-play",
             currentRate: 1.0,
-            num_plays: 0
+            num_plays: 0,
+            authenticated: false,
+            user: null
         }
         //Binding so we can call 'this' inside the methods
         // this.handleChange = this.handleChange.bind(this);
@@ -60,6 +62,13 @@ class RouteSearch extends Component{
         //Load the intial images
     }
 
+    componentWillMount(){
+        if(!this.state.authenticated){
+            var user = window.firebase.auth().currentUser;
+            if(user)
+                this.setState({authenticated: true, user: user});
+        }
+    }
     render(){
         const { rating } = this.state;
         var start = []
@@ -102,6 +111,7 @@ class RouteSearch extends Component{
                                 <DirectionsExample start={start} end={end} waypoints={waypoints} curr={this.state.coords} index={this.state.index}/>
                             </div>
                         </Row>
+                        {this.state.authenticated && (
                         <Row>
                             <div className="start-end">
                                 {/*<Search handleClick={(st, end) => this.handleSubmit(st, end)}/>*/}
@@ -109,7 +119,8 @@ class RouteSearch extends Component{
                                     Save Route!
                                 </Button>
                             </div>
-                        </Row>
+                        </Row>)}
+
 
 
                     </Col>
@@ -118,6 +129,7 @@ class RouteSearch extends Component{
                     && this.state.final_end != ""
                     && (
                     <Col md={9}>
+
                         <div className="route-gif">
                             {
                                 //Only show the rating after more than one play
@@ -125,7 +137,7 @@ class RouteSearch extends Component{
                                 this.state.index == 0 &&
                                 !this.state.playing &&
                                 (
-                                    <div id="dark-overlay">
+                                    <div id="dark-overlay" className="container">
                                         <Row>
                                             <div className="starRatings">
                                                 <Row>
@@ -210,6 +222,7 @@ class RouteSearch extends Component{
                         </Row>
                     </Col>
                     )}
+
                     {
                     //     <Col md={3}>
                     //           <h3 className="directions-heading"> Directions </h3>

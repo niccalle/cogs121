@@ -34,8 +34,12 @@ class App extends Component {
         this.provider.addScope('https://www.googleapis.com/auth/plus.login');
     }
 
-    componentDidUpdate(){
-
+    componentWillMount(){
+        if(!this.state.authenticated){
+            var user = window.firebase.auth().currentUser;
+            if(user)
+                this.setState({authenticated: true, user: user});
+        }
     }
 
     onSignIn(google_user){
@@ -78,11 +82,7 @@ class App extends Component {
     }
 
     render() {
-        if(!this.state.authenticated){
-            var user = window.firebase.auth().currentUser;
-            if(user)
-                this.setState({authenticated: true, user: user});
-        }
+
 
         return (
             <div>
@@ -91,12 +91,27 @@ class App extends Component {
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
                     <div className="App-header">
                         <div className="logo" style={{}}>
-                            <Link to={'/toproutes'}>
-                                <img src="/logo.png" style={{height:"80px", width: "80px"}}/>
-                            </Link>
+                            <nav>
+                                <ul className="account-settings">
+                                    <li className="li-settings">
+                                        <div className="div-settings">
+                                            <Link to={'/toproutes'}>
+                                                <img src="/logo-white.png" style={{height:"90px", width: "60px", paddingBottom: "30px"}}/>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li className="li-settings">
+                                        <div className="div-settings">
+                                            <h1 className="title">routep.review</h1>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+
+
                         </div>
                         <div className="middle-align">
-                            <h2 className="title">RouteP.review</h2>
+
                         </div>
                         <div className="navigation-container">
                             <nav>

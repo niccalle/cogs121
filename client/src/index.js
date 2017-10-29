@@ -12,7 +12,7 @@ ReactDOM.render((
      <Router>
          <div>
              <App>
-                <Route exact path="/" component={LandingPage}/>
+                <Route exact path="/" component={TopRoutes}/>
                 <Route path="/toproutes" component={TopRoutes}/>
                 <Route path="/route/:routeid" component={RouteSearch}/>
                 <Route path="/saved" component={SavedRoutes}/>

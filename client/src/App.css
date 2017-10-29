@@ -1,5 +1,5 @@
 .App-header {
-  background-color: #337AB7;
+  background: linear-gradient(45deg, rgba(0, 13, 173, 0.72) 20%, rgba(132, 36, 150, 0.72) 90%);
   height: 100px;
   padding: 20px;
   color: white;
@@ -26,8 +26,7 @@
 }
 
 .title{
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 50px;
+    font-weight: lighter;
 }
 
 .navigation-container{
