@@ -97,50 +97,6 @@ class TopRoutes extends Component{
                 </div>
 
 
-                <Modal
-                    isOpen={this.state.showModal}
-                    onAfterOpen={() => this.afterOpenModal()}
-                    onRequestClose={() => this.closeModal()}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                    >
-                    <div className="container">
-                        <div stlye={{padding: "5px"}}>
-                          <h2 ref="subtitle">Create A Route
-                            <Button
-                              bsStyle="danger"
-                              style={{padding:"8px", float:"right"}}
-                              onClick={() => this.closeModal()}>
-                                Close
-                              </Button>
-                          </h2>
-                        </div>
-                        <Row>
-                            <Col md={6}>
-                                <div style={{padding:"7px", width: "100%", height: "300px", margin: "auto"}}>
-                                    <DirectionsExample start={start} end={end} waypoints={[]} curr={start} index={0}/>
-                                </div>
-                            </Col>
-
-                            <Col md={6}>
-                              <Search
-                                  updateStart={(start) => {this.setState({start: start})}}
-                                  updateEnd={(end) => {this.setState({end: end})}}
-                                  handleClick={(st, end) => this.handleSubmit(st, end)}/>
-                            </Col>
-                        </Row>
-
-
-                            <Button
-                              bsStyle="primary"
-                              style={{padding:"10px", float:"right"}}
-                              onClick={() => this.goToCustomRoute()}
-                              disabled={!this.state.routePreviewed}>View Video!
-                              </Button>
-
-
-                    </div>
-                </Modal>
             </div>
         )
     }

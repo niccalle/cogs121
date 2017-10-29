@@ -47,8 +47,6 @@ class Backend {
     }
 
     getRoute = function(origin, destination, waypoints, cb){
-        console.log(window.google);
-
         const DirectionsService = new window.google.maps.DirectionsService();
 
         //Creates waypoint JSON
@@ -82,16 +80,6 @@ class Backend {
                 console.error(`error fetching directions ${body}`);
             }
         });
-        // request.get(dir_url + "&mode=bicycle&origin=" + origin + "&destination=" + destination, function(err, r, body){
-        //     if(err) {
-        //         return err;
-        //     }
-        //     body = JSON.parse(body);
-        //     var poly = body.routes[0].overview_polyline.points
-        //     cb(this.getImages(poly));
-        //     //res.send(getImages(poly));
-        // })
-
     }
 
 }
